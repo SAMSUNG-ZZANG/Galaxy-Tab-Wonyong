@@ -29,11 +29,11 @@
 ## 구현 방법
 ### 1. 화면 전환의 흐름을 직관적으로 볼 수 있고, safeArgs 통해서 화면 간의 데이터를 안전하게 전달할 수 있다는 장점이 있다고 들어서 Intent가 아닌 Navigation을 이용해서 화면 전환과 화면간의 데이터 전달을 했다.
 
-- navigation graph
+#### navigation graph
 
 ![image](https://user-images.githubusercontent.com/82709044/162136968-08ad2928-ccd9-4e6d-b847-d44fdef35e5d.png)
 
-- action
+#### action
 
 ```xml
 
@@ -133,7 +133,7 @@ object UserModule {
 
 위 표와 같은 이유로 SharedPreferences보다 PreferencesDatastore 사용을 권장해서 Datastore를 이용해서 구현했다.
 
-- 데이터 저장
+#### 데이터 저장
 
 ```kotlin
 class UserLocalDataSourceImpl @Inject constructor(
@@ -157,7 +157,7 @@ data class User(
 )
 ```
 
-- 데이터 불러오기
+#### 데이터 불러오기
 
 ```kotlin
 private val _user = MutableLiveData(User())
@@ -178,8 +178,10 @@ private val _user = MutableLiveData(User())
   - viewModelScope.launch로 인해서 userRepository.getUser()와 return 이 동시에 진행되는데 getUser()의 연산이 끝나지도 않았는데 return이 되기 때문에 delay(100)을 통해서 return 의 호출을 지연한다.
 
 ### 5. DataBinding으로 양방향 데이터 결합을 했다.
-- XML
+- DataBinding : 뷰와 상호작용하는 코드를 쉽게 작성할 수 있다.
+- ViewBinding : 뷰와 상호작용하는 코드뿐만 아니라 xml에서 표현식 언어로 레이아웃의 뷰와 변수를 연결할 수 있다.
 
+#### XML
 ```xml
 <data>
         <variable
@@ -200,8 +202,7 @@ android:text="@{password}"
 android:onClick="@{()->activity.goMainActivity()}"
 ```
 
-- Activity
-
+#### Activity
 ```kotlin
 binding.activity = this@SignInFragment
 binding.id = args.userId
