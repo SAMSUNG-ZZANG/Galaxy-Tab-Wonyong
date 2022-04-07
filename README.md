@@ -7,7 +7,7 @@
 
 - MVVM
 - DataBinding
-- DependencyInjection
+- DI
 - DataStore
 - Navigation
 
@@ -55,6 +55,9 @@
 
 ```
 
+- navigation action 내부에 argument를 추가해서 다른 화면에 데이터를 전달할 수 있다.
+- popUpTo, popUpToInclusive 를 통해서 회원가입 화면에서 로그인 화면으로 전환한 후에 회원가입 화면을 백스택에 추가하지 않을 수 있다.
+
 ```kotlin
 val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
                     userId = id,
@@ -62,10 +65,7 @@ val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
                 )
                 findNavController().navigate(action)
 ```
-
-- navigation action 내부에 argument를 추가해서 다른 화면에 데이터를 전달할 수 있다.
-- popUpTo, popUpToInclusive 를 통해서 화면 전환을 한 후에 전환한 화면이 백스택에 추가가 안된다.
-
+- 로그인 화면으로 돌아갈 때, 회원가입 때 입력했던 정보를 전달한다.
 
 ```xml
 <fragment
@@ -90,16 +90,18 @@ val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
     </fragment>
 ```
 
+- action 밖에 argument를 추가해서 전달받을 데이터를 생성할 수 있다.
+
 ```kotlin
 private val args: SignInFragmentArgs by navArgs()
 with(binding) {
-                        // id, password는 databinding variable 변수 이름 
+            // id, password는 databinding variable 변수 이름 
             id = args.userId
             password = args.userPassword
 }
 ```
 
-- action 밖에 arguments를 만들어서 데이터를 받을 수 있다.
+- navArgs()를 통해서 데이터를 전달받을 수 있다.
 
 ### 2. UI, Data 등 패키지를 만들어서 파일을 구분함으로써 CleanArchitecture+MVVM을 적용했다.
     
@@ -172,9 +174,8 @@ private val _user = MutableLiveData(User())
     }
 ```
 
-delay(100)을 한 이유
-
-- viewModelScope.launch로 인해서 userRepository.getUser()와 return 이 동시에 진행되는데 getUser()의 연산이 끝나지도 않았는데 return이 되기 때문에 delay(100)을 통해서 return 의 호출을 지연한다.
+- delay(100)을 한 이유
+  - viewModelScope.launch로 인해서 userRepository.getUser()와 return 이 동시에 진행되는데 getUser()의 연산이 끝나지도 않았는데 return이 되기 때문에 delay(100)을 통해서 return 의 호출을 지연한다.
 
 ### 5. DataBinding으로 양방향 데이터 결합을 했다.
 - XML
