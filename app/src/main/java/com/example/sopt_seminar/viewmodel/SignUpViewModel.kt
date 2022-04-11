@@ -1,9 +1,14 @@
 package com.example.sopt_seminar.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sopt_seminar.data.model.User
 import com.example.sopt_seminar.data.repository.UserRepository
+import com.example.sopt_seminar.domain.state.Event
+import com.example.sopt_seminar.domain.state.Result
+import com.example.sopt_seminar.domain.usecase.ValidateTextUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -11,28 +16,35 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val validateTextUseCase:ValidateTextUseCase
 ) : ViewModel() {
-    fun checkInput(idText: String, passwordText: String, nameText: String): Int {
-        return when {
-            nameText.isEmpty() -> 0
-            idText.isEmpty() -> 1
-            passwordText.isEmpty() -> 2
-            !Pattern.matches("^[a-zA-Z0-9]*\$", idText) -> 3
-            !Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$", passwordText) -> 4
-            !Pattern.matches("^[가-힣]*\$", nameText) -> 5
-            else -> {
+    private val _showErrorToast = MutableLiveData<Event<Boolean>>()
+    val showErrorToast: LiveData<Event<Boolean>> = _showErrorToast
+    private var _errorMsg: MutableLiveData<String> = MutableLiveData("")
+    val errorMsg get() = _errorMsg
+    private var _isError: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isError get() = _isError
+
+    fun checkInput(idText: String, passwordText: String, nameText: String){
+        when(val result = validateTextUseCase(idText, passwordText, nameText)){
+            is Result.Fail -> {
+                _errorMsg.value = result.msg
+                _showErrorToast.value = Event(true)
+                _isError.value = true
+            }
+            is Result.Success -> {
                 viewModelScope.launch {
-                    setUser(idText, passwordText)
+                    setUser(nameText, idText, passwordText)
                     setIsUser()
+                    _isError.value = false
                 }
-                6
             }
         }
     }
 
-    private suspend fun setUser(userId: String, userPassword: String) {
-        userRepository.setUser(User(userId, userPassword))
+    private suspend fun setUser(nameText: String,userId: String, userPassword: String) {
+        userRepository.setUser(User(nameText, userId, userPassword))
     }
 
     private suspend fun setIsUser() {

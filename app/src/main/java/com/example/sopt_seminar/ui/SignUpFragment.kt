@@ -8,23 +8,26 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.sopt_seminar.R
-import com.example.sopt_seminar.databinding.SignUpActivityBinding
+import com.example.sopt_seminar.databinding.SignUpFragmentBinding
 import com.example.sopt_seminar.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
-    lateinit var binding: SignUpActivityBinding
+    private var _binding: SignUpFragmentBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: SignUpViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.sign_up_activity, container, false)
+        _binding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.sign_up_fragment, container, false)
 
         with(binding) {
             activity = this@SignUpFragment
@@ -32,21 +35,27 @@ class SignUpFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     fun signUp(name: String, id: String, password: String) {
-        when (viewModel.checkInput(id, password, name)) {
-            0 -> Toast.makeText(context, "이름을 입력해주세요", Toast.LENGTH_SHORT).show()
-            1 -> Toast.makeText(context, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show()
-            2 -> Toast.makeText(context, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
-            3 -> Toast.makeText(context, "유효한 아이디를 입력해주세요", Toast.LENGTH_SHORT).show()
-            4 -> Toast.makeText(context, "유효한 비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
-            5 -> Toast.makeText(context, "유효한 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
-            6 -> {
+        viewModel.checkInput(id,password,name)
+        viewModel.isError.observe(this, Observer { isError->
+            if(isError){
+                viewModel.showErrorToast.observe(this, Observer {
+                    it.getContentIfNotHandled()?.let {
+                        Toast.makeText(context, viewModel.errorMsg.value, Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }else{
                 val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
                     userId = id,
                     userPassword = password
                 )
                 findNavController().navigate(action)
             }
-        }
+        })
     }
 }

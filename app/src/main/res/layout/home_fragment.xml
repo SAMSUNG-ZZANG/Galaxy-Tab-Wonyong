@@ -69,7 +69,7 @@
                 android:layout_width="20sp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="스크롤 테스트 내려주세요 스크롤 테스트"
+                android:text="@string/test_text"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@+id/user_mbti"

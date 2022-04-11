@@ -9,7 +9,7 @@
         android:id="@+id/sign_in_fragment"
         android:name="com.example.sopt_seminar.ui.SignInFragment"
         android:label="sign_in_activity"
-        tools:layout="@layout/sign_in_activity" >
+        tools:layout="@layout/sign_in_fragment" >
         <argument
             android:name="userId"
             app:argType="string"
@@ -30,7 +30,7 @@
         android:id="@+id/sign_up_fragment"
         android:name="com.example.sopt_seminar.ui.SignUpFragment"
         android:label="sign_up_activity"
-        tools:layout="@layout/sign_up_activity" >
+        tools:layout="@layout/sign_up_fragment" >
         <action
             android:id="@+id/action_sign_up_fragment_to_sign_in_fragment"
             app:destination="@id/sign_in_fragment"
@@ -52,6 +52,6 @@
         android:id="@+id/home_fragment"
         android:name="com.example.sopt_seminar.ui.HomeFragment"
         android:label="home_activty"
-        tools:layout="@layout/home_activty" />
+        tools:layout="@layout/home_fragment" />
 
 </navigation>
