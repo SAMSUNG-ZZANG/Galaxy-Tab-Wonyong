@@ -48,7 +48,6 @@
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="@+id/user_name"
-                app:layout_constraintHorizontal_bias="0.478"
                 app:layout_constraintStart_toStartOf="@+id/user_name"
                 app:layout_constraintTop_toBottomOf="@+id/user_name" />
 

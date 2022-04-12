@@ -106,7 +106,6 @@
                 android:onClick="@{()->activity.signUp(signUpNameEt.getText().toString(),signUpIdEt.getText().toString(),signUpPasswordEt.getText().toString())}"
                 android:text="@string/sign_up_finish_text"
                 app:layout_constraintEnd_toEndOf="@+id/sign_up_password_et"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/sign_up_password_et"
                 app:layout_constraintTop_toBottomOf="@+id/sign_up_password_et" />
         </androidx.constraintlayout.widget.ConstraintLayout>

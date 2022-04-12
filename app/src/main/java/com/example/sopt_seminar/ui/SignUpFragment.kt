@@ -28,11 +28,14 @@ class SignUpFragment : Fragment() {
     ): View {
         _binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.sign_up_fragment, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         with(binding) {
             activity = this@SignUpFragment
         }
-        return binding.root
     }
 
     override fun onDestroyView() {

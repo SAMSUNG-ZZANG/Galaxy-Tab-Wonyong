@@ -8,19 +8,11 @@ import kotlinx.coroutines.flow.Flow
 class UserRepositoryImpl @Inject constructor(
     private val userLocalDatSource: UserLocalDatSource
 ) : UserRepository {
-    override fun getUser(): Flow<User> {
+    override suspend fun getUser(): Flow<User> {
         return userLocalDatSource.getUser()
     }
 
     override suspend fun setUser(user: User) {
         userLocalDatSource.setUser(user)
-    }
-
-    override fun getIsUser(): Flow<Boolean> {
-        return userLocalDatSource.getIsUser()
-    }
-
-    override suspend fun setIsUser() {
-        userLocalDatSource.setIsUser()
     }
 }
