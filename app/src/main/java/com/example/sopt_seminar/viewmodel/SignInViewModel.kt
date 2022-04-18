@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sopt_seminar.data.model.User
-import com.example.sopt_seminar.domain.state.Event
+import com.example.sopt_seminar.util.Event
 import com.example.sopt_seminar.domain.state.Result
 import com.example.sopt_seminar.domain.usecase.GetUserUseCase
 import com.example.sopt_seminar.domain.usecase.ValidateTextUseCase

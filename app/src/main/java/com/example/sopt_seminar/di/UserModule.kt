@@ -1,7 +1,7 @@
 package com.example.sopt_seminar.di
 
 import android.content.Context
-import com.example.sopt_seminar.data.repository.UserRepository
+import com.example.sopt_seminar.domain.repository.UserRepository
 import com.example.sopt_seminar.data.repository.UserRepositoryImpl
 import com.example.sopt_seminar.data.source.local.UserLocalDatSource
 import com.example.sopt_seminar.data.source.local.UserLocalDataSourceImpl
@@ -23,7 +23,7 @@ object UserModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userLocalDatSource:UserLocalDatSource): UserRepository {
+    fun provideUserRepository(userLocalDatSource: UserLocalDatSource): UserRepository {
         return UserRepositoryImpl(userLocalDatSource)
     }
 }
