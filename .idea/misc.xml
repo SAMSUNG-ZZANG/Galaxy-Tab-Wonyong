@@ -3,7 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/activity_main.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.172" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/activity_main.xml" value="0.30757282692521576" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/home_activty.xml" value="0.4660194347351754" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/home_fragment.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/sign_in_activity.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/sign_in_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/sign_out_activity.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/sign_up_activity.xml" value="0.30757282692521576" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/sign_up_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.172" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.172" />
       </map>
     </option>
   </component>

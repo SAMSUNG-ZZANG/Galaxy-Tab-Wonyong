@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="activity"
+            type="com.example.sopt_seminar.ui.SignInFragment" />
+        <variable
+            name="id"
+            type="String" />
+        <variable
+            name="password"
+            type="String" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:id="@+id/sign_in_fragment"
+            tools:context="com.example.sopt_seminar.ui.SignInFragment"
+            >
+
+            <TextView
+                android:id="@+id/sign_in_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:text="@string/app_name"
+                android:textSize="60sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/id_input_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="@string/id_text"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/sign_in_id_et"
+                app:layout_constraintTop_toBottomOf="@+id/sign_in_title" />
+
+            <EditText
+                android:id="@+id/sign_in_id_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/id_hint"
+                android:text="@{id}"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/id_input_text" />
+
+            <TextView
+                android:id="@+id/password_input_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="@string/password_text"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/sign_in_password_et"
+                app:layout_constraintTop_toBottomOf="@+id/sign_in_id_et" />
+
+            <EditText
+                android:id="@+id/sign_in_password_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_hint"
+                android:text="@{password}"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/password_input_text" />
+
+            <Button
+                android:id="@+id/sign_in_login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44dp"
+                android:text="@string/login_text"
+                android:onClick="@{()->activity.login(signInIdEt.getText().toString(),signInPasswordEt.getText().toString())}"
+                app:layout_constraintEnd_toEndOf="@+id/sign_in_password_et"
+                app:layout_constraintStart_toStartOf="@+id/sign_in_password_et"
+                app:layout_constraintTop_toBottomOf="@+id/sign_in_password_et" />
+
+            <Button
+                android:id="@+id/sign_in_clear_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green"
+                android:text="@string/sign_up_text"
+                android:onClick="@{()->activity.goMainActivity()}"
+                app:layout_constraintEnd_toEndOf="@+id/sign_in_login_btn"
+                app:layout_constraintStart_toStartOf="@+id/sign_in_login_btn"
+                app:layout_constraintTop_toBottomOf="@+id/sign_in_login_btn" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
