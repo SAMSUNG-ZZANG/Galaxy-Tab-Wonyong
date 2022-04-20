@@ -5,8 +5,17 @@
       <map>
         <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.172" />
         <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/activity_main.xml" value="0.30757282692521576" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/activity_test.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/detail_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/follower_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/follower_frame.xml" value="0.5029821073558648" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/fragment_follower.xml" value="0.24814814814814815" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/fragment_repo.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/home_activty.xml" value="0.4660194347351754" />
-        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/home_fragment.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/home_fragment.xml" value="0.4660194347351754" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/repo_fragment.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/repo_frame.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/repository_frame.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/sign_in_activity.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/sign_in_fragment.xml" value="0.1" />
         <entry key="..\:/Users/wodrk/Desktop/Android_ WorkSpace/Sopt-Seminar/app/src/main/res/layout/sign_out_activity.xml" value="0.32916666666666666" />

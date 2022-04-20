@@ -8,7 +8,7 @@ import com.example.sopt_seminar.data.constants.DATASTORE
 import com.example.sopt_seminar.data.constants.GET_USER_ID
 import com.example.sopt_seminar.data.constants.GET_USER_NAME
 import com.example.sopt_seminar.data.constants.GET_USER_PASSWORD
-import com.example.sopt_seminar.data.model.User
+import com.example.sopt_seminar.domain.model.User
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow

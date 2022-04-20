@@ -1,4 +1,4 @@
-package com.example.sopt_seminar.data.model
+package com.example.sopt_seminar.domain.model
 
 data class User(
     val userName: String = "",

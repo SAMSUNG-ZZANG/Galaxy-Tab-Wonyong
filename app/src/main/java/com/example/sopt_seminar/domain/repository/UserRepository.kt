@@ -1,6 +1,6 @@
 package com.example.sopt_seminar.domain.repository
 
-import com.example.sopt_seminar.data.model.User
+import com.example.sopt_seminar.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {

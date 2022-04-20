@@ -1,28 +1,39 @@
 package com.example.sopt_seminar.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.HomeFragmentBinding
+import com.example.sopt_seminar.util.BaseFragment
+import com.google.android.material.tabs.TabLayout
 
-class HomeFragment : Fragment() {
-    private var _binding: HomeFragmentBinding? = null
-    private val binding get() = _binding!!
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.home_fragment, container, false)
-        return binding.root
+class HomeFragment : BaseFragment<HomeFragmentBinding>(R.layout.home_fragment) {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val followerFragment = FollowerFragment()
+        val repoFragment = RepoFragment()
+        childFragmentManager.beginTransaction().replace(R.id.home_fragment_cv, followerFragment)
+            .commit()
+
+        with(binding) {
+            homeTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    val transaction = childFragmentManager.beginTransaction()
+                    when (tab.position) {
+                        FOLLOWER_TURN -> transaction.replace(R.id.home_fragment_cv, followerFragment)
+                        REPOSITORY_TURN -> transaction.replace(R.id.home_fragment_cv, repoFragment)
+                    }
+                    transaction.commit()
+                }
+                override fun onTabUnselected(tab: TabLayout.Tab) = Unit
+                override fun onTabReselected(tab: TabLayout.Tab) = Unit
+            })
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    companion object {
+        const val FOLLOWER_TURN = 0
+        const val REPOSITORY_TURN = 1
     }
 }
