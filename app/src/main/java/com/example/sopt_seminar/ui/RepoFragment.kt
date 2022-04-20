@@ -1,6 +1,7 @@
 package com.example.sopt_seminar.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,16 +29,16 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
             ): Boolean {
                 val startPosition = viewHolder.adapterPosition
                 val endPosition = target.adapterPosition
-                Collections.swap(testList, startPosition, endPosition)
                 adapter.moveItem(startPosition, endPosition)
+                Collections.swap(testList, startPosition, endPosition)
                 return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-                        testList.removeAt(viewHolder.adapterPosition)
                         adapter.removeItem(viewHolder.adapterPosition)
+                        testList.removeAt(viewHolder.adapterPosition)
                     }
                 }
             }
@@ -57,7 +58,7 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
                     findNavController().navigate(action)
                 }
             })
-            adapter.submitList(testList)
+            adapter.submitList(testList.toCollection(mutableListOf()))
         }
     }
 

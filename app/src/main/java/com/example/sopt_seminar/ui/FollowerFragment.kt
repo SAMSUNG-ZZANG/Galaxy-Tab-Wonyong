@@ -30,9 +30,8 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
             ): Boolean {
                 val startPosition = viewHolder.adapterPosition
                 val endPosition = target.adapterPosition
-
-                Collections.swap(testList, startPosition, endPosition)
                 adapter.moveItem(startPosition, endPosition)
+                Collections.swap(testList, startPosition, endPosition)
                 return true
             }
 
@@ -40,8 +39,8 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
                 val position = viewHolder.adapterPosition
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-                        testList.removeAt(position)
                         adapter.removeItem(position)
+                        testList.removeAt(position)
                     }
                 }
             }
@@ -51,7 +50,7 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
             followerRecyclerView.adapter = adapter
             followerRecyclerView.layoutManager = LinearLayoutManager(context)
             ItemTouchHelper(simpleCallback).attachToRecyclerView(followerRecyclerView)
-            adapter.submitList(testList)
+            adapter.submitList(testList.toCollection(mutableListOf()))
             adapter.setOnItemClickListener(object : FollowerAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
