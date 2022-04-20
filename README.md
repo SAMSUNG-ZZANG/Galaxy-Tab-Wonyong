@@ -1,5 +1,5 @@
 # Seminar2 Assignment
-![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/82709044/164224549-fbcebce1-37e3-40b6-abc3-c88bfc4c0a34.gif)
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/82709044/164247126-bec4d985-e1b3-435b-bfb6-84ff139d1fc2.gif)
 
 # HomeFragment
 - navigation 추가해서 HomeFragment에서 Recyclerview 내에 있는 아이템 중 하나를 클릭하면 HomeFragment → DetailFragment로 이동한다.
@@ -42,8 +42,80 @@
         </fragment>
     ```
     
-- add가 아닌 replace를 사용해서 FragmentContainerView에 디폴트 값을 FollowerFragment로 설정했다. (이유 → 삽질)
-- navigation을 사용중이라서 frament 안에서 fragment를 설정해야 되서 supportFragmentManager 가아닌 childFragmentManager를 사용했다.
+### add가 아닌 replace를 사용해서 FragmentContainerView에 디폴트 값을 FollowerFragment로 설정했다.
+
+<details>
+<summary> add -> replace로 한 이유 (삽질) </summary>
+<div markdown="1">
+
+> 상황
+> 
+
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/82709044/164224036-762a6a4c-e9ad-4588-b2a4-1587629abd0c.gif)
+        
+FollowerFragment → RepoFragment 로 이동할 땐 리사이클러 뷰 내에 있는 데이터가 중첩 되지 않지만
+
+FollowerFragment → DetailFtagment 이동 후 다시 FollowerFragment로 돌아오면 리사이클러 뷰 내 데이터가 중첩되는 현상이 나왔다. 이 상황에서 다시 DetailFragment로 이동했다가 돌아오면 FollowerFragment가 3개 중첩이 된다
+
+하지만 중첩된 후 repository를 갔다가 오면 정상적으로 작동한다
+
+그래서 2개 상황의 생명주기 차이를 확인했다
+
+> FollowerFragment → RepoFollowerFragment
+> 
+
+![FollowrToRepoToFollower](https://user-images.githubusercontent.com/82709044/164222596-e37538dc-774e-4d43-aa79-59e9720b6381.JPG)
+
+평범한 Fragment 생명주기를 보여준다.
+
+> FollowerFragment → DetailFragment→ FollowerFragment
+
+![followerToDetailBack](https://user-images.githubusercontent.com/82709044/164222524-fc4078a3-d54f-4b6e-b8e0-4e40d81f6524.JPG)
+
+onDestory가 작동을 안해서 view가 쌓이는 것을 확인했다.
+
+> FollowerFragment → DetailFragment→ FollowerFragment → DetailFragment→ FollowerFragment
+
+![three](https://user-images.githubusercontent.com/82709044/164222479-ce9f2d95-a174-44a0-9995-191621193f80.JPG)
+
+detailFragment를 왕복하면 할수록 계속 fragment가 쌓인다
+
+> 해결 (add→replace)
+> 
+
+```kotlin
+override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        childFragmentManager.beginTransaction().add(R.id.home_fragment_cv, followerFragment)
+            .commit()
+    }
+```
+
+```kotlin
+override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        childFragmentManager.beginTransaction().replace(R.id.home_fragment_cv, followerFragment)
+            .commit()
+    }
+```
+
+원인이 FollowerFragment인 줄 알고 stackoverflow 찾고, FollowerFragment 생명주기에 `savedInstanceState` 가 들어가는 값에 전부 null을 넣는 등 별 짓을 다했지만 원인은 HomeFragment에 있었다.
+
+초기 default 프래그먼트를 넣기 위해서 add를 해야 되는줄 알아서 add를 한 것이 원인이었다.
+
+detail을 왔다 갔다 하는 동안 add가 계속 쌓여서 생긴 오류였다.
+
+- replace, add 차이
+    
+    replace → 이전 프래그먼트를 삭제하고 그 위에 새 프래그먼트를 삽입
+    
+    add → 제거하지 않고 프래그먼트 삽입
+    
+요거 해결하려고 4시간은 삽질한거 같다...
+</div>
+</details>
+
+### navigation을 사용중이라서 frament 안에서 fragment를 설정해야 되서 supportFragmentManager 가아닌 childFragmentManager를 사용했다.
 
 ![image](https://user-images.githubusercontent.com/82709044/164221813-041d52d7-6c9b-460d-a0a8-d28190746458.png)
         
@@ -101,11 +173,15 @@ ItemTouchHelper(simpleCallback).attachToRecyclerView(followerRecyclerView)
 >     [https://www.youtube.com/watch?v=TXAbYWZhpBQ](https://www.youtube.com/watch?v=TXAbYWZhpBQ)
 >     
 - LayoutManager
-- FollowerFragment ← `followerRecyclerView.*layoutManager* = LinearLayoutManager(*context*)`  1열 recyclerview
-- RepoFragment ← `repoRecyclerView.*layoutManager* = GridLayoutManager(*context*, 2)` 2열 recyclerview
+- FollowerFragment ← `followerRecyclerView.layoutManager = LinearLayoutManager(context)`  열이 1개인  recyclerview
+- RepoFragment ← `repoRecyclerView.layoutManager = GridLayoutManager(context, 2)` 열이 2개인 recyclerview
 - BaseFragment를 만들어서 Fragment를 생성할 때마다 반복적인 코드를 줄일 수 있다.
-- `class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.*follower_fragment*)`
+- `class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower_fragment)`
 - 이런식으로 Fragment를 만들 때마다 상속하면 된다.
+
+#### 주의할점
+`adapter.submitList(testList)` 이런식으로 원본 객체를 전달하면 diffutill에서 계산할 때 오류가 생긴다.
+`adapter.submitList(testList.toCollection(mutableListOf())` 복사본을 전달해서 오류를 해결했다.
 
 # Repo, Follower Adapter
 - ListAdapter로 구현
@@ -116,6 +192,7 @@ ItemTouchHelper(simpleCallback).attachToRecyclerView(followerRecyclerView)
 - remove, 위치 변경 효과
 
 ```kotlin
+// Adapter
 fun moveItem(fromPosition: Int, toPosition: Int) {
     val newList = currentList.toMutableList()
     Collections.swap(newList, fromPosition, toPosition)
@@ -190,75 +267,3 @@ none ← 아예 끊기
 > 
 > 
 > [https://codeman77.tistory.com/54](https://codeman77.tistory.com/54)
-
-# 삽질
-<details>
-<summary> 요번 과제 삽질</summary>
-<div markdown="1">
-
-> 상황
-> 
-
-![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/82709044/164224036-762a6a4c-e9ad-4588-b2a4-1587629abd0c.gif)
-        
-FollowerFragment → RepoFragment 로 이동할 땐 리사이클러 뷰 내에 있는 데이터가 중첩 되지 않지만
-
-FollowerFragment → DetailFtagment 이동 후 다시 FollowerFragment로 돌아오면 리사이클러 뷰 내 데이터가 중첩되는 현상이 나왔다. 이 상황에서 다시 DetailFragment로 이동했다가 돌아오면 FollowerFragment가 3개 중첩이 된다
-
-하지만 중첩된 후 repository를 갔다가 오면 정상적으로 작동한다
-
-그래서 2개 상황의 생명주기 차이를 확인했다
-
-> FollowerFragment → RepoFollowerFragment
-> 
-
-![FollowrToRepoToFollower](https://user-images.githubusercontent.com/82709044/164222596-e37538dc-774e-4d43-aa79-59e9720b6381.JPG)
-
-평범한 Fragment 생명주기를 보여준다.
-
-> FollowerFragment → DetailFragment→ FollowerFragment
-
-![followerToDetailBack](https://user-images.githubusercontent.com/82709044/164222524-fc4078a3-d54f-4b6e-b8e0-4e40d81f6524.JPG)
-
-onDestory가 작동을 안해서 view가 쌓이는 것을 확인했다.
-
-> FollowerFragment → DetailFragment→ FollowerFragment → DetailFragment→ FollowerFragment
-
-![three](https://user-images.githubusercontent.com/82709044/164222479-ce9f2d95-a174-44a0-9995-191621193f80.JPG)
-
-detailFragment를 왕복하면 할수록 계속 fragment가 쌓인다
-
-> 해결 (add→replace)
-> 
-
-```kotlin
-override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        childFragmentManager.beginTransaction().add(R.id.home_fragment_cv, followerFragment)
-            .commit()
-    }
-```
-
-```kotlin
-override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        childFragmentManager.beginTransaction().replace(R.id.home_fragment_cv, followerFragment)
-            .commit()
-    }
-```
-
-FollowerFragment에서 2시간 동안 stackoverflow 찾고, fragment 생명주기에 `savedInstanceState` 가 들어가는 값에 전부 null을 넣는 등 별 짓을 다했지만 원인은 HomeFragment에 있었다.
-
-초기 default 프래그먼트를 넣기 위해서 add를 해야 되는줄 알아서 add를 한 것이 원인이었다.
-
-detail을 왔다 갔다 하는 동안 add가 계속 쌓여서 생긴 오류였다.
-
-- replace, add 차이
-    
-    replace → 이전 프래그먼트를 삭제하고 그 위에 새 프래그먼트를 삽입
-    
-    add → 제거하지 않고 프래그먼트 삽입
-    
-요거 해결하려고 4시간은 삽질한거 같다...
-</div>
-</details>
