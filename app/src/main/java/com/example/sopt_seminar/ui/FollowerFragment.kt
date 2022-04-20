@@ -32,7 +32,7 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
                 val endPosition = target.adapterPosition
 
                 Collections.swap(testList, startPosition, endPosition)
-                adapter.notifyItemMoved(startPosition, endPosition)
+                adapter.moveItem(startPosition, endPosition)
                 return true
             }
 
@@ -41,7 +41,7 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
                         testList.removeAt(position)
-                        adapter.notifyItemRemoved(position)
+                        adapter.removeItem(position)
                     }
                 }
             }

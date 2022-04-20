@@ -29,7 +29,7 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
                 val startPosition = viewHolder.adapterPosition
                 val endPosition = target.adapterPosition
                 Collections.swap(testList, startPosition, endPosition)
-                adapter.notifyItemMoved(startPosition, endPosition)
+                adapter.moveItem(startPosition, endPosition)
                 return true
             }
 
@@ -37,7 +37,7 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
                         testList.removeAt(viewHolder.adapterPosition)
-                        adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                        adapter.removeItem(viewHolder.adapterPosition)
                     }
                 }
             }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sopt_seminar.databinding.FollowerFrameBinding
 import com.example.sopt_seminar.domain.model.Follower
+import java.util.*
 
 class FollowerAdapter: ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>(FOLLOWER_COMPARATOR){
 
@@ -48,6 +49,18 @@ class FollowerAdapter: ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>
         with(holder) {
             bind(current.name, current.description)
         }
+    }
+
+    fun moveItem(fromPosition: Int, toPosition: Int) {
+        val newList = currentList.toMutableList()
+        Collections.swap(newList, fromPosition, toPosition)
+        submitList(newList)
+    }
+
+    fun removeItem(position:Int){
+        val newList = currentList.toMutableList()
+        newList.removeAt(position)
+        submitList(newList)
     }
 
     companion object {

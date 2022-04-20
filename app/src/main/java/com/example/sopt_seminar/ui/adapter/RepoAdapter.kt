@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sopt_seminar.databinding.RepoFrameBinding
 import com.example.sopt_seminar.domain.model.Repo
+import java.util.*
 
 class RepoAdapter : ListAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
     private lateinit var itemClick: OnItemClickListener
@@ -44,6 +45,18 @@ class RepoAdapter : ListAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATO
         with(holder) {
             bind(current.name, current.description)
         }
+    }
+
+    fun moveItem(fromPosition: Int, toPosition: Int) {
+        val newList = currentList.toMutableList()
+        Collections.swap(newList, fromPosition, toPosition)
+        submitList(newList)
+    }
+
+    fun removeItem(position:Int){
+        val newList = currentList.toMutableList()
+        newList.removeAt(position)
+        submitList(newList)
     }
 
     companion object {
