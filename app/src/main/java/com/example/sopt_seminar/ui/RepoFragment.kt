@@ -49,7 +49,7 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
             repoRecyclerView.layoutManager = GridLayoutManager(context, 2)
             ItemTouchHelper(itemTouchCallback).attachToRecyclerView(repoRecyclerView)
 
-            adapter.setOnItemClickListener(object :RepoAdapter.OnItemClickListener{
+            adapter.setOnItemClickListener(object : RepoAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
                         followerName = testList[position].name,
@@ -63,7 +63,7 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
     }
 
     companion object {
-        private val testList: MutableList<Repo> = mutableListOf(
+        private val testList = mutableListOf(
             Repo(0, "레포1", "레포1 입니다.레포1 입니다.레포1 입니다.레포1 입니다."),
             Repo(1, "레포2", "레포2 입니다.레포2 입니다.레포2 입니다.레포2 입니다."),
             Repo(2, "레포3", "레포3 입니다."),

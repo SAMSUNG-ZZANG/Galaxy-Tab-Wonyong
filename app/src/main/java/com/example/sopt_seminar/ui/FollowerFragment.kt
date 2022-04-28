@@ -64,7 +64,7 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
     }
 
     companion object {
-        private val testList: MutableList<Follower> = mutableListOf(
+        private val testList = mutableListOf(
             Follower(0, "팔로우1", "팔로우1 입니다.팔로우1 입니다.팔로우1 입니다.팔로우1 입니다.팔로우1 입니다.팔로우1 입니다."),
             Follower(1, "팔로우2", "팔로우2 입니다.팔로우2 입니다.팔로우2 입니다.팔로우2 입니다.팔로우2 입니다.팔로우2 입니다."),
             Follower(2, "팔로우3", "팔로우3 입니다."),
