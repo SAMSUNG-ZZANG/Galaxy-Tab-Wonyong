@@ -1,7 +1,6 @@
 package com.example.sopt_seminar.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,7 +16,13 @@ import java.util.*
 class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = RepoAdapter()
+        val adapter = RepoAdapter { position ->
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                followerName = testList[position].name,
+                followerDes = testList[position].description
+            )
+            findNavController().navigate(action)
+        }
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.DOWN or ItemTouchHelper.UP or ItemTouchHelper.START or ItemTouchHelper.END,
             ItemTouchHelper.LEFT
@@ -48,16 +53,6 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
             repoRecyclerView.adapter = adapter
             repoRecyclerView.layoutManager = GridLayoutManager(context, 2)
             ItemTouchHelper(itemTouchCallback).attachToRecyclerView(repoRecyclerView)
-
-            adapter.setOnItemClickListener(object : RepoAdapter.OnItemClickListener {
-                override fun onItemClick(position: Int) {
-                    val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                        followerName = testList[position].name,
-                        followerDes = testList[position].description
-                    )
-                    findNavController().navigate(action)
-                }
-            })
             adapter.submitList(testList.toCollection(mutableListOf()))
         }
     }

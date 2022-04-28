@@ -9,18 +9,10 @@ import com.example.sopt_seminar.databinding.FollowerFrameBinding
 import com.example.sopt_seminar.domain.model.Follower
 import java.util.*
 
-class FollowerAdapter: ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>(FOLLOWER_COMPARATOR){
+class FollowerAdapter(private val action: (Int) -> Unit) :
+    ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>(FOLLOWER_COMPARATOR) {
 
-    private lateinit var itemClick: OnItemClickListener
-    interface OnItemClickListener{
-        fun onItemClick(position: Int)
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener){
-        itemClick = listener
-    }
-
-    class FollowerViewHolder(binding: FollowerFrameBinding,listener: OnItemClickListener) :
+    inner class FollowerViewHolder(binding: FollowerFrameBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private val name = binding.followerNameTv
@@ -28,9 +20,7 @@ class FollowerAdapter: ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>
         private val root = binding.followerFrame
 
         init {
-            root.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
+            root.setOnClickListener { action(adapterPosition) }
         }
 
         fun bind(_name: String, _des: String) {
@@ -41,7 +31,8 @@ class FollowerAdapter: ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
         val view = FollowerFrameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FollowerViewHolder(view,itemClick)
+        view.followerFrame.setOnClickListener { currentList[itemCount] }
+        return FollowerViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
@@ -57,7 +48,7 @@ class FollowerAdapter: ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>
         submitList(newList)
     }
 
-    fun removeItem(position:Int){
+    fun removeItem(position: Int) {
         val newList = currentList.toMutableList()
         newList.removeAt(position)
         submitList(newList)

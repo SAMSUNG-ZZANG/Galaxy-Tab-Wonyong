@@ -17,7 +17,13 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, null)
-        val adapter = FollowerAdapter()
+        val adapter = FollowerAdapter { position ->
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                followerName = testList[position].name,
+                followerDes = testList[position].description
+            )
+            findNavController().navigate(action)
+        }
 
         val simpleCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -51,15 +57,6 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
             followerRecyclerView.layoutManager = LinearLayoutManager(context)
             ItemTouchHelper(simpleCallback).attachToRecyclerView(followerRecyclerView)
             adapter.submitList(testList.toCollection(mutableListOf()))
-            adapter.setOnItemClickListener(object : FollowerAdapter.OnItemClickListener {
-                override fun onItemClick(position: Int) {
-                    val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                        followerName = testList[position].name,
-                        followerDes = testList[position].description
-                    )
-                    findNavController().navigate(action)
-                }
-            })
         }
     }
 

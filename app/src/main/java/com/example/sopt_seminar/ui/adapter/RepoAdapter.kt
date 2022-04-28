@@ -1,6 +1,5 @@
 package com.example.sopt_seminar.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,26 +9,18 @@ import com.example.sopt_seminar.databinding.RepoFrameBinding
 import com.example.sopt_seminar.domain.model.Repo
 import java.util.*
 
-class RepoAdapter : ListAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
-    private lateinit var itemClick: OnItemClickListener
-    interface OnItemClickListener{
-        fun onItemClick(position: Int)
-    }
+class RepoAdapter(private val action: (Int) -> Unit) :
+    ListAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
 
-    fun setOnItemClickListener(listener: OnItemClickListener){
-        itemClick = listener
-    }
-
-    class RepoViewHolder(binding: RepoFrameBinding,listener: OnItemClickListener) : RecyclerView.ViewHolder(binding.root) {
+    inner class RepoViewHolder(binding: RepoFrameBinding) : RecyclerView.ViewHolder(binding.root) {
         private val name = binding.repoNameTv
         private val des = binding.repoDesTv
         private val root = binding.repoFrame
 
         init {
-            root.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
+            root.setOnClickListener { action(adapterPosition) }
         }
+
         fun bind(_name: String, _des: String) {
             name.text = _name
             des.text = _des
@@ -38,7 +29,7 @@ class RepoAdapter : ListAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATO
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {
         val view = RepoFrameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RepoViewHolder(view,itemClick)
+        return RepoViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {
@@ -54,7 +45,7 @@ class RepoAdapter : ListAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATO
         submitList(newList)
     }
 
-    fun removeItem(position:Int){
+    fun removeItem(position: Int) {
         val newList = currentList.toMutableList()
         newList.removeAt(position)
         submitList(newList)
