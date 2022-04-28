@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sopt_seminar.domain.model.User
 import com.example.sopt_seminar.domain.state.Result
 import com.example.sopt_seminar.domain.usecase.SetUserUseCase
 import com.example.sopt_seminar.domain.usecase.ValidateTextUseCase
@@ -44,6 +43,6 @@ class SignUpViewModel @Inject constructor(
     }
 
     private suspend fun setUser(nameText: String,userId: String, userPassword: String) {
-        setUserUseCase(User(nameText, userId, userPassword))
+        setUserUseCase(nameText, userId, userPassword)
     }
 }

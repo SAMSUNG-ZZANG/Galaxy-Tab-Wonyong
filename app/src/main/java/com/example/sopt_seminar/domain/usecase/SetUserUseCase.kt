@@ -7,7 +7,7 @@ import javax.inject.Inject
 class SetUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    suspend operator fun invoke(user:User){
-        userRepository.setUser(user)
+    suspend operator fun invoke(nameText: String, userId: String, userPassword: String) {
+        userRepository.setUser(User(nameText, userId, userPassword))
     }
 }
