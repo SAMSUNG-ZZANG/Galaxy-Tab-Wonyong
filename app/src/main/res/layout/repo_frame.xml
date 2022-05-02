@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="repo"
+            type="com.example.sopt_seminar.domain.model.Repo" />
+    </data>
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:maxLines="1"
+                android:text="@{repo.name}"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +40,7 @@
                 android:layout_height="25dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{repo.description}"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

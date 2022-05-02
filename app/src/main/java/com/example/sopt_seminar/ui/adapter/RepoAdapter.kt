@@ -12,18 +12,13 @@ import java.util.*
 class RepoAdapter(private val action: (Int) -> Unit) :
     ListAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
 
-    inner class RepoViewHolder(binding: RepoFrameBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val name = binding.repoNameTv
-        private val des = binding.repoDesTv
-        private val root = binding.repoFrame
-
+    inner class RepoViewHolder(private val binding: RepoFrameBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
-            root.setOnClickListener { action(adapterPosition) }
+            binding.root.setOnClickListener { action(adapterPosition) }
         }
 
-        fun bind(_name: String, _des: String) {
-            name.text = _name
-            des.text = _des
+        fun bind(repo: Repo) {
+            binding.repo = repo
         }
     }
 
@@ -34,9 +29,7 @@ class RepoAdapter(private val action: (Int) -> Unit) :
 
     override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {
         val current = getItem(position)
-        with(holder) {
-            bind(current.name, current.description)
-        }
+        holder.bind(current)
     }
 
     fun moveItem(fromPosition: Int, toPosition: Int) {

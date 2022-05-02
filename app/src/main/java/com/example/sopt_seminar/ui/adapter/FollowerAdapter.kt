@@ -12,20 +12,15 @@ import java.util.*
 class FollowerAdapter(private val action: (Int) -> Unit) :
     ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>(FOLLOWER_COMPARATOR) {
 
-    inner class FollowerViewHolder(binding: FollowerFrameBinding) :
+    inner class FollowerViewHolder(private val binding: FollowerFrameBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private val name = binding.followerNameTv
-        private val des = binding.followerDesTv
-        private val root = binding.followerFrame
-
         init {
-            root.setOnClickListener { action(adapterPosition) }
+            binding.root.setOnClickListener { action(adapterPosition) }
         }
 
-        fun bind(_name: String, _des: String) {
-            name.text = _name
-            des.text = _des
+        fun bind(follower: Follower) {
+            binding.follower = follower
         }
     }
 
@@ -37,9 +32,7 @@ class FollowerAdapter(private val action: (Int) -> Unit) :
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
         val current = getItem(position)
-        with(holder) {
-            bind(current.name, current.description)
-        }
+        holder.bind(current)
     }
 
     fun moveItem(fromPosition: Int, toPosition: Int) {
