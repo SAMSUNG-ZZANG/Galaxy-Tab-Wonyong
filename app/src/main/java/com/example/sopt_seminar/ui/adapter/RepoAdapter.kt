@@ -9,16 +9,20 @@ import com.example.sopt_seminar.databinding.RepoFrameBinding
 import com.example.sopt_seminar.domain.model.Repo
 import java.util.*
 
-class RepoAdapter(private val action: (Int) -> Unit) :
+class RepoAdapter(private val action: (String, String) -> Unit) :
     ListAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
 
-    inner class RepoViewHolder(private val binding: RepoFrameBinding) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.root.setOnClickListener { action(adapterPosition) }
-        }
+    inner class RepoViewHolder(private val binding: RepoFrameBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(repo: Repo) {
             binding.repo = repo
+            binding.root.setOnClickListener {
+                action(
+                    repo.name,
+                    repo.description
+                )
+            }
         }
     }
 
@@ -32,16 +36,18 @@ class RepoAdapter(private val action: (Int) -> Unit) :
         holder.bind(current)
     }
 
-    fun moveItem(fromPosition: Int, toPosition: Int) {
+    fun moveItem(fromPosition: Int, toPosition: Int, move: () -> Unit) {
         val newList = currentList.toMutableList()
         Collections.swap(newList, fromPosition, toPosition)
         submitList(newList)
+        move()
     }
 
-    fun removeItem(position: Int) {
+    fun removeItem(position: Int, remove: () -> Unit) {
         val newList = currentList.toMutableList()
         newList.removeAt(position)
         submitList(newList)
+        remove()
     }
 
     companion object {

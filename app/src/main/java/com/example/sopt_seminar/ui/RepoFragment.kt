@@ -16,10 +16,10 @@ import java.util.*
 class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = RepoAdapter { position ->
+        val adapter = RepoAdapter { name, description ->
             val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                followerName = testList[position].name,
-                followerDes = testList[position].description
+                followerName = name,
+                followerDes = description
             )
             findNavController().navigate(action)
         }
@@ -34,16 +34,18 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
             ): Boolean {
                 val startPosition = viewHolder.adapterPosition
                 val endPosition = target.adapterPosition
-                adapter.moveItem(startPosition, endPosition)
-                Collections.swap(testList, startPosition, endPosition)
+                adapter.moveItem(startPosition, endPosition) {
+                    moveItem(startPosition, endPosition)
+                }
                 return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-                        adapter.removeItem(viewHolder.adapterPosition)
-                        testList.removeAt(viewHolder.adapterPosition)
+                        adapter.removeItem(viewHolder.adapterPosition) {
+                            removeItem(viewHolder.adapterPosition)
+                        }
                     }
                 }
             }
@@ -51,10 +53,17 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
 
         with(binding) {
             repoRecyclerView.adapter = adapter
-            repoRecyclerView.layoutManager = GridLayoutManager(context, 2)
             ItemTouchHelper(itemTouchCallback).attachToRecyclerView(repoRecyclerView)
             adapter.submitList(testList.toCollection(mutableListOf()))
         }
+    }
+
+    fun removeItem(position: Int) {
+        testList.removeAt(position)
+    }
+
+    fun moveItem(fromPosition: Int, toPosition: Int) {
+        Collections.swap(testList, fromPosition, toPosition)
     }
 
     companion object {

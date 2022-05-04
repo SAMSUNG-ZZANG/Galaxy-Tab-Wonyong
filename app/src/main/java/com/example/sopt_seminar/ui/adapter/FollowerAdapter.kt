@@ -9,24 +9,25 @@ import com.example.sopt_seminar.databinding.FollowerFrameBinding
 import com.example.sopt_seminar.domain.model.Follower
 import java.util.*
 
-class FollowerAdapter(private val action: (Int) -> Unit) :
+class FollowerAdapter(private val action: (String, String) -> Unit) :
     ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>(FOLLOWER_COMPARATOR) {
 
     inner class FollowerViewHolder(private val binding: FollowerFrameBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.root.setOnClickListener { action(adapterPosition) }
-        }
-
         fun bind(follower: Follower) {
             binding.follower = follower
+            binding.root.setOnClickListener {
+                action(
+                    follower.name,
+                    follower.description
+                )
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
         val view = FollowerFrameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        view.followerFrame.setOnClickListener { currentList[itemCount] }
         return FollowerViewHolder(view)
     }
 
@@ -35,16 +36,18 @@ class FollowerAdapter(private val action: (Int) -> Unit) :
         holder.bind(current)
     }
 
-    fun moveItem(fromPosition: Int, toPosition: Int) {
+    fun moveItem(fromPosition: Int, toPosition: Int, move: () -> Unit) {
         val newList = currentList.toMutableList()
         Collections.swap(newList, fromPosition, toPosition)
         submitList(newList)
+        move()
     }
 
-    fun removeItem(position: Int) {
+    fun removeItem(position: Int, remove: () -> Unit) {
         val newList = currentList.toMutableList()
         newList.removeAt(position)
         submitList(newList)
+        remove()
     }
 
     companion object {

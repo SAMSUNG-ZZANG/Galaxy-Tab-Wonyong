@@ -17,10 +17,10 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, null)
-        val adapter = FollowerAdapter { position ->
+        val adapter = FollowerAdapter { name, description ->
             val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                followerName = testList[position].name,
-                followerDes = testList[position].description
+                followerName = name,
+                followerDes = description
             )
             findNavController().navigate(action)
         }
@@ -36,17 +36,18 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
             ): Boolean {
                 val startPosition = viewHolder.adapterPosition
                 val endPosition = target.adapterPosition
-                adapter.moveItem(startPosition, endPosition)
-                Collections.swap(testList, startPosition, endPosition)
+                adapter.moveItem(startPosition, endPosition) {
+                    moveItem(startPosition, endPosition)
+                }
                 return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-                        adapter.removeItem(position)
-                        testList.removeAt(position)
+                        adapter.removeItem(viewHolder.adapterPosition) {
+                            removeItem(viewHolder.adapterPosition)
+                        }
                     }
                 }
             }
@@ -54,10 +55,17 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
 
         with(binding) {
             followerRecyclerView.adapter = adapter
-            followerRecyclerView.layoutManager = LinearLayoutManager(context)
             ItemTouchHelper(simpleCallback).attachToRecyclerView(followerRecyclerView)
             adapter.submitList(testList.toCollection(mutableListOf()))
         }
+    }
+
+    private fun removeItem(position: Int) {
+        testList.removeAt(position)
+    }
+
+    private fun moveItem(fromPosition: Int, toPosition: Int) {
+        Collections.swap(testList, fromPosition, toPosition)
     }
 
     companion object {
