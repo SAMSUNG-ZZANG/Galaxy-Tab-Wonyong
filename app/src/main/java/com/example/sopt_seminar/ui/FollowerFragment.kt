@@ -3,9 +3,6 @@ package com.example.sopt_seminar.ui
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.FollowerFragmentBinding
 import com.example.sopt_seminar.domain.model.Follower
@@ -25,48 +22,21 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
             findNavController().navigate(action)
         }
 
-        val simpleCallback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            ItemTouchHelper.LEFT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                val startPosition = viewHolder.adapterPosition
-                val endPosition = target.adapterPosition
-                adapter.moveItem(startPosition, endPosition) {
-                    moveItem(startPosition, endPosition)
-                }
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                when (direction) {
-                    ItemTouchHelper.LEFT -> {
-                        adapter.removeItem(viewHolder.adapterPosition) {
-                            removeItem(viewHolder.adapterPosition)
-                        }
-                    }
-                }
-            }
-        }
-
-        with(binding) {
+        binding.apply {
+            main = this@FollowerFragment
             followerRecyclerView.adapter = adapter
-            ItemTouchHelper(simpleCallback).attachToRecyclerView(followerRecyclerView)
-            adapter.submitList(testList.toCollection(mutableListOf()))
         }
     }
 
-    private fun removeItem(position: Int) {
+    val removeItem = fun(position: Int) {
         testList.removeAt(position)
     }
 
-    private fun moveItem(fromPosition: Int, toPosition: Int) {
+    val moveItem = fun(fromPosition: Int, toPosition: Int) {
         Collections.swap(testList, fromPosition, toPosition)
     }
+
+    fun getList(): List<Follower> = testList
 
     companion object {
         private val testList = mutableListOf(
