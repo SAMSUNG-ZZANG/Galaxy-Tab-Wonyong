@@ -3,9 +3,6 @@ package com.example.sopt_seminar.ui
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.RepoFragmentBinding
 import com.example.sopt_seminar.domain.model.Repo
@@ -23,48 +20,22 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
             )
             findNavController().navigate(action)
         }
-        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.DOWN or ItemTouchHelper.UP or ItemTouchHelper.START or ItemTouchHelper.END,
-            ItemTouchHelper.LEFT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                val startPosition = viewHolder.adapterPosition
-                val endPosition = target.adapterPosition
-                adapter.moveItem(startPosition, endPosition) {
-                    moveItem(startPosition, endPosition)
-                }
-                return true
-            }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                when (direction) {
-                    ItemTouchHelper.LEFT -> {
-                        adapter.removeItem(viewHolder.adapterPosition) {
-                            removeItem(viewHolder.adapterPosition)
-                        }
-                    }
-                }
-            }
-        }
-
-        with(binding) {
+        binding.apply {
+            main = this@RepoFragment
             repoRecyclerView.adapter = adapter
-            ItemTouchHelper(itemTouchCallback).attachToRecyclerView(repoRecyclerView)
-            adapter.submitList(testList.toCollection(mutableListOf()))
         }
     }
 
-    fun removeItem(position: Int) {
+    val removeItem = fun(position: Int) {
         testList.removeAt(position)
     }
 
-    fun moveItem(fromPosition: Int, toPosition: Int) {
+    val moveItem = fun(fromPosition: Int, toPosition: Int) {
         Collections.swap(testList, fromPosition, toPosition)
     }
+
+    fun getList(): List<Repo> = testList
 
     companion object {
         private val testList = mutableListOf(
