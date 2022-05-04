@@ -17,4 +17,12 @@
     <string name="invalid_id_msg">유효한 아이디를 입력해주세요</string>
     <string name="invalid_password_msg">유효한 비밀번호를 입력해주세요</string>
     <string name="invalid_name_msg">유효한 이름을 입력해주세요</string>
+
+    <string name="home_name">이름: 강원용</string>
+    <string name="home_age">나이: 23</string>
+    <string name="home_mbti">MBTI: ISTJ</string>
+    <string name="home_follower_btn">Follower</string>
+    <string name="home_repository_btn">Repository</string>
+
+    <string name="null_des">null</string>
 </resources>

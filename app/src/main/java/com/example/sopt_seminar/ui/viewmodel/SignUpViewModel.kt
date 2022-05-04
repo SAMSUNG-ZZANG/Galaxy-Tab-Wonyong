@@ -1,14 +1,13 @@
-package com.example.sopt_seminar.viewmodel
+package com.example.sopt_seminar.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sopt_seminar.data.model.User
-import com.example.sopt_seminar.util.Event
 import com.example.sopt_seminar.domain.state.Result
 import com.example.sopt_seminar.domain.usecase.SetUserUseCase
 import com.example.sopt_seminar.domain.usecase.ValidateTextUseCase
+import com.example.sopt_seminar.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -44,6 +43,6 @@ class SignUpViewModel @Inject constructor(
     }
 
     private suspend fun setUser(nameText: String,userId: String, userPassword: String) {
-        setUserUseCase(User(nameText, userId, userPassword))
+        setUserUseCase(nameText, userId, userPassword)
     }
 }
