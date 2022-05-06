@@ -15,7 +15,7 @@ class FollowerFragment : BaseFragment<FollowerFragmentBinding>(R.layout.follower
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, null)
         val adapter = FollowerAdapter { name, description ->
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+            val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
                 followerName = name,
                 followerDes = description
             )

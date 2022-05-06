@@ -14,7 +14,7 @@ class RepoFragment : BaseFragment<RepoFragmentBinding>(R.layout.repo_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = RepoAdapter { name, description ->
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+            val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
                 followerName = name,
                 followerDes = description
             )
