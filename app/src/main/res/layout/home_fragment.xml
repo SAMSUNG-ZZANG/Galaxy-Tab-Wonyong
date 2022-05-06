@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="drawable"
+            type="int" />
+
+        <variable
             name="main"
             type="com.example.sopt_seminar.ui.HomeFragment" />
 
@@ -34,11 +38,11 @@
 
             <ImageView
                 android:id="@+id/imageView"
+                setDrawable="@{drawable}"
                 android:layout_width="250dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/kang"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

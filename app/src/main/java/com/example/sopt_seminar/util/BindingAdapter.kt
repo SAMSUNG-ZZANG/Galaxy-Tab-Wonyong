@@ -2,11 +2,13 @@ package com.example.sopt_seminar.util
 
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.domain.model.Follower
 import com.example.sopt_seminar.domain.model.Repo
@@ -26,6 +28,17 @@ object BindingAdapter {
             fragmentManger.beginTransaction().replace(R.id.home_fragment_cv, childFragment).commit()
             changeSelectState(button)
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("setDrawable")
+    fun showImg(imageView: ImageView, drawable: Int) {
+        Glide.with(imageView.context)
+            .load(drawable)
+            .override(100, 100)
+            .circleCrop()
+            .error(R.drawable.ic_baseline_person_24)
+            .into(imageView)
     }
 
     @JvmStatic

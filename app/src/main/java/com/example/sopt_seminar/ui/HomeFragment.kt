@@ -20,6 +20,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(R.layout.home_fragment) {
             follower = followerFragment
             fragmentManager = childFragmentManager
             main = this@HomeFragment
+            drawable = R.drawable.kang
         }
     }
 
