@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/follower_name_tv"
-                style="@style/customTextView"
+                style="@style/custom_text"
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:text="@{follower.name}"
@@ -44,7 +44,7 @@
 
             <TextView
                 android:id="@+id/follower_des_tv"
-                style="@style/customTextView"
+                style="@style/custom_text"
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:ellipsize="end"

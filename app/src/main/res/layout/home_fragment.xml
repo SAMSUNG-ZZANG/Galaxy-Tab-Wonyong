@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="main"
+            type="com.example.sopt_seminar.ui.HomeFragment" />
+
+        <variable
             name="fragmentManager"
             type="androidx.fragment.app.FragmentManager" />
 
@@ -42,7 +46,7 @@
 
             <TextView
                 android:id="@+id/user_name"
-                style="@style/customTextView"
+                style="@style/custom_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
@@ -55,7 +59,7 @@
 
             <TextView
                 android:id="@+id/user_age"
-                style="@style/customTextView"
+                style="@style/custom_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -67,7 +71,7 @@
 
             <TextView
                 android:id="@+id/user_mbti"
-                style="@style/customTextView"
+                style="@style/custom_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -79,25 +83,29 @@
 
             <Button
                 android:id="@+id/follower_btn"
+                style="@style/custom_text"
+                changeSelectState="@{main.changeState}"
                 childFragment="@{follower}"
                 fragmentManger="@{fragmentManager}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/black"
+                android:background="@drawable/btn_txt_selector"
                 android:text="@string/home_follower_btn"
-                android:textColor="@color/white"
+                app:backgroundTint="@null"
                 app:layout_constraintEnd_toStartOf="@+id/user_mbti"
                 app:layout_constraintTop_toBottomOf="@+id/user_mbti" />
 
             <Button
                 android:id="@+id/repo_btn"
+                style="@style/custom_text"
+                changeSelectState="@{main.changeState}"
                 childFragment="@{repo}"
                 fragmentManger="@{fragmentManager}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/black"
+                android:background="@drawable/btn_txt_selector"
                 android:text="@string/home_repository_btn"
-                android:textColor="@color/white"
+                app:backgroundTint="@null"
                 app:layout_constraintStart_toEndOf="@+id/user_mbti"
                 app:layout_constraintTop_toBottomOf="@+id/user_mbti" />
 
