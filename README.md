@@ -1,4 +1,6 @@
 # Seminar3 Assignment
+![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/82709044/167149700-fae41894-3b10-4464-a458-7425f8a6e6df.gif)
+
 ### 폰트 적용하기
 
 ```xml
