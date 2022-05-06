@@ -7,7 +7,7 @@ import com.example.sopt_seminar.databinding.ProfileFragmentBinding
 import com.example.sopt_seminar.util.BaseFragment
 
 class ProfileFragment : BaseFragment<ProfileFragmentBinding>(R.layout.profile_fragment) {
-    private val followerFragment = FollowerFragment()
+    private val followerFragment = FollowerListFragment()
     private val repoFragment = RepoFragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

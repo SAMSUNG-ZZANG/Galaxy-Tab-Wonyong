@@ -19,7 +19,7 @@
 
         <variable
             name="follower"
-            type="com.example.sopt_seminar.ui.FollowerFragment" />
+            type="com.example.sopt_seminar.ui.FollowerListFragment" />
 
         <variable
             name="repo"

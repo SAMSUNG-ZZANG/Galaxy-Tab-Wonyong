@@ -18,7 +18,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
     private fun initAdapter() {
         val fragmentList = mutableListOf(ProfileFragment(), HomeFragment(), CameraFragment())
-        adapter = ViewPagerAdapter(requireActivity())
+        adapter = ViewPagerAdapter(this)
         adapter.fragmentList.addAll(fragmentList)
         binding.mainVp.adapter = adapter
     }

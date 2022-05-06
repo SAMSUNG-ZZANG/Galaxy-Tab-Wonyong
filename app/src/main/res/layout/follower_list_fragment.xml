@@ -6,7 +6,7 @@
 
         <variable
             name="main"
-            type="com.example.sopt_seminar.ui.FollowerFragment" />
+            type="com.example.sopt_seminar.ui.FollowerListFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
