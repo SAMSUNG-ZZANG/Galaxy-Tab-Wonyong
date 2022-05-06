@@ -21,11 +21,11 @@
 
         <TextView
             android:id="@+id/detail_name_tv"
+            style="@style/customTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="236dp"
             android:text="@{follower_name}"
-            android:textColor="@color/black"
             android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,11 +33,11 @@
 
         <TextView
             android:id="@+id/detail_des_tv"
+            style="@style/customTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="72dp"
             android:text="@{follower_des}"
-            android:textColor="@color/black"
             android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

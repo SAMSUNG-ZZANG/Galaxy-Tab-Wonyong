@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="activity"
             type="com.example.sopt_seminar.ui.SignUpFragment" />
@@ -34,11 +35,11 @@
 
             <TextView
                 android:id="@+id/name_input_text"
+                style="@style/customTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/name_text"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/sign_up_name_et"
                 app:layout_constraintTop_toBottomOf="@+id/sign_up_title" />
@@ -56,11 +57,11 @@
 
             <TextView
                 android:id="@+id/id_input_text"
+                style="@style/customTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:text="@string/id_text"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/sign_up_id_et"
                 app:layout_constraintTop_toBottomOf="@+id/sign_up_name_et" />
@@ -78,11 +79,11 @@
 
             <TextView
                 android:id="@+id/password_input_text"
+                style="@style/customTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:text="@string/password_text"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/sign_up_password_et"
                 app:layout_constraintTop_toBottomOf="@+id/sign_up_id_et" />
