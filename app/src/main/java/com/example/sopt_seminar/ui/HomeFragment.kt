@@ -27,10 +27,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun initTabLayout() {
-        val tabList = listOf("팔로잉", "팔로워")
+        val tabList = resources.getStringArray(R.array.tab_layout_items)
 
-        TabLayoutMediator(binding.homeTl, binding.homeVp) { tab, postion ->
-            tab.text = tabList[postion]
+        TabLayoutMediator(binding.homeTl, binding.homeVp) { tab, position ->
+            tab.text = tabList[position]
         }.attach()
     }
 }
