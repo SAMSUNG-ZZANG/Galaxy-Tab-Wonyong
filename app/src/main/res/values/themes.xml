@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="TextAppearance.Common" parent="TextAppearance.AppCompat">
+    <style name="common_text" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/inconsolata</item>
     </style>

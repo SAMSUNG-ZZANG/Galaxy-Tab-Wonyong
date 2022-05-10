@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/github_tv"
-            android:textAppearance="@style/TextAppearance.Common"
+            android:textAppearance="@style/common_text"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="@+id/home_img"
             app:layout_constraintStart_toStartOf="@+id/home_img"
