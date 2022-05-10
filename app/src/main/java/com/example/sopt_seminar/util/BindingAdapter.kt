@@ -2,14 +2,8 @@ package com.example.sopt_seminar.util
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.sopt_seminar.domain.model.Follower
-import com.example.sopt_seminar.domain.model.Repo
-import com.example.sopt_seminar.ui.adapter.FollowerAdapter
-import com.example.sopt_seminar.ui.adapter.RepoAdapter
 
 object BindingAdapter {
 
@@ -19,100 +13,5 @@ object BindingAdapter {
         load(drawable) {
             transformations(CircleCropTransformation())
         }
-    }
-
-    @JvmStatic
-    @BindingAdapter(value = ["bindList", "moveItem", "removeItem"])
-    fun bindList(
-        recyclerView: RecyclerView,
-        bindList: List<*>,
-        moveItem: (Int, Int) -> Unit,
-        removeItem: (Int) -> Unit
-    ) {
-        when (recyclerView.adapter) {
-            is FollowerAdapter -> {
-                val adapter = recyclerView.adapter as FollowerAdapter
-                val copyBindList = bindList.toCollection(mutableListOf()) as List<Follower>
-                val simpleCallback = getSimpleCallBack(adapter, moveItem, removeItem)
-                ItemTouchHelper(simpleCallback!!).attachToRecyclerView(recyclerView)
-                adapter.submitList(copyBindList)
-            }
-            is RepoAdapter -> {
-                val adapter = recyclerView.adapter as RepoAdapter
-                val copyBindList = bindList.toCollection(mutableListOf()) as List<Repo>
-                val simpleCallback = getSimpleCallBack(adapter, moveItem, removeItem)
-                ItemTouchHelper(simpleCallback!!).attachToRecyclerView(recyclerView)
-                adapter.submitList(copyBindList)
-            }
-        }
-    }
-
-    private fun getSimpleCallBack(
-        adapter: RecyclerView.Adapter<*>,
-        moveItem: (Int, Int) -> Unit,
-        removeItem: (Int) -> Unit
-    ): ItemTouchHelper.SimpleCallback? {
-        var simpleCallback: ItemTouchHelper.SimpleCallback? = null
-        when (adapter) {
-            is FollowerAdapter -> {
-                simpleCallback = object : ItemTouchHelper.SimpleCallback(
-                    ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-                    ItemTouchHelper.LEFT
-                ) {
-                    override fun onMove(
-                        recyclerView: RecyclerView,
-                        viewHolder: RecyclerView.ViewHolder,
-                        target: RecyclerView.ViewHolder
-                    ): Boolean {
-                        val startPosition = viewHolder.adapterPosition
-                        val endPosition = target.adapterPosition
-                        adapter.moveItem(startPosition, endPosition) {
-                            moveItem(startPosition, endPosition)
-                        }
-                        return true
-                    }
-
-                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                        when (direction) {
-                            ItemTouchHelper.LEFT -> {
-                                adapter.removeItem(viewHolder.adapterPosition) {
-                                    removeItem(viewHolder.adapterPosition)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            is RepoAdapter -> {
-                simpleCallback = object : ItemTouchHelper.SimpleCallback(
-                    ItemTouchHelper.DOWN or ItemTouchHelper.UP or ItemTouchHelper.START or ItemTouchHelper.END,
-                    ItemTouchHelper.LEFT
-                ) {
-                    override fun onMove(
-                        recyclerView: RecyclerView,
-                        viewHolder: RecyclerView.ViewHolder,
-                        target: RecyclerView.ViewHolder
-                    ): Boolean {
-                        val startPosition = viewHolder.adapterPosition
-                        val endPosition = target.adapterPosition
-                        adapter.moveItem(startPosition, endPosition) {
-                            moveItem(startPosition, endPosition)
-                        }
-                        return true
-                    }
-
-                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                        when (direction) {
-                            ItemTouchHelper.LEFT -> {
-                                adapter.removeItem(viewHolder.adapterPosition) {
-                                    removeItem(viewHolder.adapterPosition)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return simpleCallback
     }
 }
