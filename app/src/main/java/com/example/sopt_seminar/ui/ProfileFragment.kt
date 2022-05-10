@@ -17,7 +17,6 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>(R.layout.profile_fr
         binding.followerBtn.isSelected = true
 
         binding.apply {
-            main = this@ProfileFragment
             drawable = R.drawable.kang
         }
 

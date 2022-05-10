@@ -13,10 +13,10 @@
         tools:context=".ui.FollowingFragment">
 
         <TextView
-            style="@style/custom_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wait_tv"
+            android:textAppearance="@style/TextAppearance.Common"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
