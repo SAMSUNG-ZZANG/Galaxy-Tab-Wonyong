@@ -36,7 +36,7 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(R.layout.sign_in_frag
                         Toast.makeText(context, viewModel.errorMsg.value, Toast.LENGTH_SHORT).show()
                     }
                 })
-            } else findNavController().navigate(R.id.mainFragment)
+            } else findNavController().navigate(R.id.main_fragment)
         })
     }
 

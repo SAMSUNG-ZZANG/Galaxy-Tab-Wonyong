@@ -23,7 +23,7 @@
             app:destination="@id/sign_up_fragment" />
         <action
             android:id="@+id/action_sign_in_fragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/main_fragment" />
     </fragment>
 
     <fragment
@@ -48,7 +48,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/detailFragment"
+        android:id="@+id/detail_fragment"
         android:name="com.example.sopt_seminar.ui.DetailFragment"
         android:label="DetailFragment"
         tools:layout="@layout/detail_fragment">
@@ -63,12 +63,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/main_fragment"
         android:name="com.example.sopt_seminar.ui.MainFragment"
         android:label="MainFragment">
         <action
             android:id="@+id/action_mainFragment_to_detailFragment"
-            app:destination="@id/detailFragment">
+            app:destination="@id/detail_fragment">
             <argument
                 android:name="followerName"
                 android:defaultValue=""
