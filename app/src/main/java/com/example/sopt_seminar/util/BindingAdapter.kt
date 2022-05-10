@@ -1,11 +1,7 @@
 package com.example.sopt_seminar.util
 
-import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,19 +12,6 @@ import com.example.sopt_seminar.ui.adapter.FollowerAdapter
 import com.example.sopt_seminar.ui.adapter.RepoAdapter
 
 object BindingAdapter {
-    @JvmStatic
-    @BindingAdapter(value = ["fragmentManger", "childFragment", "changeSelectState"])
-    fun changeFragment(
-        button: Button,
-        fragmentManger: FragmentManager,
-        childFragment: Fragment,
-        changeSelectState: (View) -> Unit
-    ) {
-        button.setOnClickListener {
-            fragmentManger.beginTransaction().replace(R.id.home_fragment_cv, childFragment).commit()
-            changeSelectState(button)
-        }
-    }
 
     @JvmStatic
     @BindingAdapter("setDrawable")

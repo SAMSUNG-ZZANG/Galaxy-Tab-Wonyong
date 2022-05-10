@@ -2,43 +2,47 @@ package com.example.sopt_seminar.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.ProfileFragmentBinding
 import com.example.sopt_seminar.util.BaseFragment
 
 class ProfileFragment : BaseFragment<ProfileFragmentBinding>(R.layout.profile_fragment) {
-    private val followerFragment = FollowerListFragment()
-    private val repoFragment = RepoFragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        childFragmentManager.beginTransaction().replace(R.id.home_fragment_cv, followerFragment)
-            .commit()
+        childFragmentManager.commit {
+            replace<FollowerListFragment>(R.id.home_fragment_cv)
+        }
         binding.followerBtn.isSelected = true
 
         binding.apply {
-            repo = repoFragment
-            follower = followerFragment
-            fragmentManager = childFragmentManager
             main = this@ProfileFragment
             drawable = R.drawable.kang
         }
+
+        with(binding) {
+            followerBtn.setOnClickListener { followerBtnEvent() }
+            repoBtn.setOnClickListener { repoBtnEvent() }
+        }
     }
 
-    val changeState = fun(view: View) {
-        val followerBtn = binding.followerBtn
-        val repoBtn = binding.repoBtn
-        when (view.id) {
-            R.id.follower_btn -> {
-                if (!followerBtn.isSelected) {
-                    followerBtn.isSelected = true
-                    repoBtn.isSelected = false
-                }
+    private fun followerBtnEvent() {
+        if (!binding.followerBtn.isSelected) {
+            binding.followerBtn.isSelected = true
+            binding.repoBtn.isSelected = false
+            childFragmentManager.commit {
+                replace<FollowerListFragment>(R.id.home_fragment_cv)
             }
-            R.id.repo_btn -> {
-                if (!repoBtn.isSelected) {
-                    repoBtn.isSelected = true
-                    followerBtn.isSelected = false
-                }
+        }
+    }
+
+    private fun repoBtnEvent() {
+        if (!binding.repoBtn.isSelected) {
+            binding.repoBtn.isSelected = true
+            binding.followerBtn.isSelected = false
+            childFragmentManager.commit {
+                replace<RepoFragment>(R.id.home_fragment_cv)
             }
         }
     }

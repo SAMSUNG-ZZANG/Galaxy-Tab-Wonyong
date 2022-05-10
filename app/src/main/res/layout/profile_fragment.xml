@@ -12,18 +12,6 @@
         <variable
             name="main"
             type="com.example.sopt_seminar.ui.ProfileFragment" />
-
-        <variable
-            name="fragmentManager"
-            type="androidx.fragment.app.FragmentManager" />
-
-        <variable
-            name="follower"
-            type="com.example.sopt_seminar.ui.FollowerListFragment" />
-
-        <variable
-            name="repo"
-            type="com.example.sopt_seminar.ui.RepoFragment" />
     </data>
 
     <ScrollView
@@ -88,9 +76,6 @@
             <Button
                 android:id="@+id/follower_btn"
                 style="@style/custom_text"
-                changeSelectState="@{main.changeState}"
-                childFragment="@{follower}"
-                fragmentManger="@{fragmentManager}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_txt_selector"
@@ -102,9 +87,6 @@
             <Button
                 android:id="@+id/repo_btn"
                 style="@style/custom_text"
-                changeSelectState="@{main.changeState}"
-                childFragment="@{repo}"
-                fragmentManger="@{fragmentManager}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_txt_selector"
