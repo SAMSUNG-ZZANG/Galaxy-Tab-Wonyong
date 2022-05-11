@@ -13,7 +13,7 @@ class ValidateTextUseCase @Inject constructor() {
             !Pattern.matches("^[a-zA-Z0-9]*\$", idText) -> Result.Fail("유효한 아이디를 입력해주세요")
             !Pattern.matches("^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$", passwordText) -> Result.Fail("유효한 비밀번호를 입력해주세요")
             !Pattern.matches("^[가-힣]*\$", nameText) -> Result.Fail("유효한 이름을 입력해주세요")
-            else -> Result.Success
+            else -> Result.Success(null)
         }
     }
 }

@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="activity"
-            type="com.example.sopt_seminar.ui.SignUpFragment" />
+            name="vm"
+            type="com.example.sopt_seminar.ui.signup.SignUpViewModel" />
     </data>
 
     <ScrollView
@@ -18,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
-            tools:context="com.example.sopt_seminar.ui.SignUpFragment">
+            tools:context="com.example.sopt_seminar.ui.signup.SignUpFragment">
 
             <TextView
                 android:id="@+id/sign_up_title"
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/name_text"
-                android:textColor="@color/black"
+                android:textAppearance="@style/common_text"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/sign_up_name_et"
                 app:layout_constraintTop_toBottomOf="@+id/sign_up_title" />
@@ -50,6 +51,7 @@
                 android:hint="@string/name_hint"
                 android:inputType="text"
                 android:maxLines="1"
+                android:text="@={vm.nameText}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name_input_text" />
@@ -60,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:text="@string/id_text"
-                android:textColor="@color/black"
+                android:textAppearance="@style/common_text"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/sign_up_id_et"
                 app:layout_constraintTop_toBottomOf="@+id/sign_up_name_et" />
@@ -72,6 +74,7 @@
                 android:hint="@string/id_hint"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
+                android:text="@={vm.idText}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/id_input_text" />
@@ -82,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:text="@string/password_text"
-                android:textColor="@color/black"
+                android:textAppearance="@style/common_text"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/sign_up_password_et"
                 app:layout_constraintTop_toBottomOf="@+id/sign_up_id_et" />
@@ -94,16 +97,19 @@
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:maxLines="1"
+                android:text="@={vm.pwText}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/password_input_text" />
 
             <Button
                 android:id="@+id/sign_up_clear_btn"
+                errorMsg="@{vm.errorMsg}"
+                isError="@{vm.isError}"
+                android:onClick="@{()->vm.checkInput()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="44dp"
-                android:onClick="@{()->activity.signUp(signUpNameEt.getText().toString(),signUpIdEt.getText().toString(),signUpPasswordEt.getText().toString())}"
                 android:text="@string/sign_up_finish_text"
                 app:layout_constraintEnd_toEndOf="@+id/sign_up_password_et"
                 app:layout_constraintStart_toStartOf="@+id/sign_up_password_et"

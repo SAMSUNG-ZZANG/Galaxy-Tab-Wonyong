@@ -1,4 +1,4 @@
-package com.example.sopt_seminar.ui.adapter
+package com.example.sopt_seminar.ui.profile.repo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

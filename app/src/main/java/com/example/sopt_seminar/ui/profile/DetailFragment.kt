@@ -1,4 +1,4 @@
-package com.example.sopt_seminar.ui
+package com.example.sopt_seminar.ui.profile
 
 import android.os.Bundle
 import android.view.View

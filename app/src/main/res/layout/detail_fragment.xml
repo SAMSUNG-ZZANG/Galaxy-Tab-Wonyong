@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.sopt_seminar.ui.DetailFragment">
+        tools:context="com.example.sopt_seminar.ui.profile.DetailFragment">
 
         <TextView
             android:id="@+id/detail_name_tv"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="236dp"
             android:text="@{follower_name}"
-            android:textColor="@color/black"
+            android:textAppearance="@style/common_text"
             android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="72dp"
             android:text="@{follower_des}"
-            android:textColor="@color/black"
+            android:textAppearance="@style/common_text"
             android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

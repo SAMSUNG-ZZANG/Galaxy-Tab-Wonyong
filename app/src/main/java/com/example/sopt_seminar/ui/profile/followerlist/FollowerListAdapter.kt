@@ -1,4 +1,4 @@
-package com.example.sopt_seminar.ui.adapter
+package com.example.sopt_seminar.ui.profile.followerlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,8 +9,8 @@ import com.example.sopt_seminar.databinding.FollowerFrameBinding
 import com.example.sopt_seminar.domain.model.Follower
 import java.util.*
 
-class FollowerAdapter(private val action: (String, String) -> Unit) :
-    ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>(FOLLOWER_COMPARATOR) {
+class FollowerListAdapter(private val action: (String, String) -> Unit) :
+    ListAdapter<Follower, FollowerListAdapter.FollowerViewHolder>(FOLLOWER_COMPARATOR) {
 
     inner class FollowerViewHolder(private val binding: FollowerFrameBinding) :
         RecyclerView.ViewHolder(binding.root) {

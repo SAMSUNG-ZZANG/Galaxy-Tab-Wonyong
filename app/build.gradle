@@ -38,6 +38,12 @@ android {
 }
 
 dependencies {
+    // repeatLifeCycle
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-beta01'
+
+    // Coil
+    implementation "io.coil-kt:coil:2.0.0-rc03"
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     // navigation
     def nav_version = "2.4.2"
