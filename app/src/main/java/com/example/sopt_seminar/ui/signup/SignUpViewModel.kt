@@ -33,11 +33,11 @@ class SignUpViewModel @Inject constructor(
     fun checkInput() {
         when (val result =
             validateTextUseCase(idText.value, pwText.value, nameText.value)) {
-            is Result.Fail -> {
-                _errorMsg.value = result.msg
+            is Result.Fail<*> -> {
+                _errorMsg.value = result.msg.toString()
                 _isError.value = true
             }
-            is Result.Success -> {
+            is Result.Success<*> -> {
                 viewModelScope.launch {
                     _isError.value = false
                     setUserUseCase(nameText.value, idText.value, pwText.value)

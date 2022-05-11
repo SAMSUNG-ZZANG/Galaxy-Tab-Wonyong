@@ -34,9 +34,9 @@ class UserLocalDataSourceImpl @Inject constructor(
 
     override suspend fun setUser(user: UserEntity) {
         context.dataStore.edit { preferences ->
-            preferences[userIdKey] = user.userId
-            preferences[userPasswordKey] = user.userPassword
-            preferences[userNameKey] = user.userName
+            preferences[userIdKey] = user.email
+            preferences[userPasswordKey] = user.password
+            preferences[userNameKey] = user.name
         }
     }
 }

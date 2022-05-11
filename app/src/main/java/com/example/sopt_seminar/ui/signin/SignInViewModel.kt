@@ -31,13 +31,13 @@ class SignInViewModel @Inject constructor(
     fun checkInput() {
         viewModelScope.launch {
             when (val result = validateTextUseCase(idText.value, pwText.value)) {
-                is Result.Fail -> {
-                    _errorMsg.value = result.msg
+                is Result.Fail<*> -> {
+                    _errorMsg.value = result.msg.toString()
                     _isError.value = true
                 }
-                is Result.Success -> {
-                    getUserUseCase().collect {
-                        if (it.userId == idText.value && it.userPassword == pwText.value) {
+                is Result.Success<*> -> {
+                    getUserUseCase().collect { user->
+                        if (user.userEmail == idText.value && user.userPassword == pwText.value) {
                             _isError.value = false
                             _isFinish.value = true
                         } else {

@@ -13,11 +13,11 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
     override suspend fun getUser(): Flow<User> {
         return userLocalDatSource.getUser().map { user ->
-            User(user.userName, user.userId, user.userPassword)
+            User(user.name, user.email, user.password)
         }
     }
 
     override suspend fun setUser(user: User) {
-        userLocalDatSource.setUser(UserEntity(user.userName, user.userId, user.userPassword))
+        userLocalDatSource.setUser(UserEntity(user.userName, user.userEmail, user.userPassword))
     }
 }
