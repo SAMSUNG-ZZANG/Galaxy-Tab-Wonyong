@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sopt_seminar">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MainApp"
         android:allowBackup="true"
@@ -9,10 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launcher_foreground"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SoptSeminar">
-        <activity
-            android:name=".ui.TestActivity"
-            android:exported="false" />
+        android:theme="@style/Theme.SoptSeminar"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true">
