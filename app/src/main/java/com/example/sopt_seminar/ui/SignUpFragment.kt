@@ -2,43 +2,41 @@ package com.example.sopt_seminar.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.SignUpFragmentBinding
 import com.example.sopt_seminar.ui.viewmodel.SignUpViewModel
 import com.example.sopt_seminar.util.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(R.layout.sign_up_fragment) {
-    private val viewModel: SignUpViewModel by activityViewModels()
+    val viewModel: SignUpViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding) {
-            activity = this@SignUpFragment
-        }
-    }
 
-    fun signUp(name: String, id: String, password: String) {
-        viewModel.checkInput(id,password,name)
-        viewModel.isError.observe(this, Observer { isError->
-            if(isError){
-                viewModel.showErrorToast.observe(this, Observer {
-                    it.getContentIfNotHandled()?.let {
-                        Toast.makeText(context, viewModel.errorMsg.value, Toast.LENGTH_SHORT).show()
+        binding.apply {
+            vm = viewModel
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isFinish.collect { isFinish ->
+                    if (isFinish) {
+                        val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
+                            userId = viewModel.idText.value,
+                            userPassword = viewModel.pwText.value
+                        )
+                        findNavController().navigate(action)
                     }
-                })
-            }else{
-                val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
-                    userId = id,
-                    userPassword = password
-                )
-                findNavController().navigate(action)
+                }
             }
-        })
+        }
     }
 }

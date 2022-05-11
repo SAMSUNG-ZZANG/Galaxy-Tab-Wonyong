@@ -6,16 +6,8 @@
     <data>
 
         <variable
-            name="activity"
-            type="com.example.sopt_seminar.ui.SignInFragment" />
-
-        <variable
-            name="id"
-            type="String" />
-
-        <variable
-            name="password"
-            type="String" />
+            name="vm"
+            type="com.example.sopt_seminar.ui.viewmodel.SignInViewModel" />
     </data>
 
     <ScrollView
@@ -59,7 +51,7 @@
                 android:hint="@string/id_hint"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:text="@{id}"
+                android:text="@={vm.idText}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/id_input_text" />
@@ -82,17 +74,19 @@
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:text="@{password}"
+                android:text="@={vm.pwText}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/password_input_text" />
 
             <Button
                 android:id="@+id/sign_in_login_btn"
+                errorMsg="@{vm.errorMsg}"
+                isError="@{vm.isError}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="44dp"
-                android:onClick="@{()->activity.login(signInIdEt.getText().toString(),signInPasswordEt.getText().toString())}"
+                android:onClick="@{()->vm.checkInput()}"
                 android:text="@string/login_text"
                 app:layout_constraintEnd_toEndOf="@+id/sign_in_password_et"
                 app:layout_constraintStart_toStartOf="@+id/sign_in_password_et"
@@ -103,7 +97,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/green"
-                android:onClick="@{()->activity.goMainActivity()}"
                 android:text="@string/sign_up_text"
                 app:layout_constraintEnd_toEndOf="@+id/sign_in_login_btn"
                 app:layout_constraintStart_toStartOf="@+id/sign_in_login_btn"

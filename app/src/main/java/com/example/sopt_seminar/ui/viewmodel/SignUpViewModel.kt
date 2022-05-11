@@ -1,48 +1,49 @@
 package com.example.sopt_seminar.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sopt_seminar.domain.state.Result
 import com.example.sopt_seminar.domain.usecase.SetUserUseCase
 import com.example.sopt_seminar.domain.usecase.ValidateTextUseCase
-import com.example.sopt_seminar.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val validateTextUseCase:ValidateTextUseCase,
+    private val validateTextUseCase: ValidateTextUseCase,
     private val setUserUseCase: SetUserUseCase
 ) : ViewModel() {
-    private val _showErrorToast = MutableLiveData<Event<Boolean>>()
-    val showErrorToast: LiveData<Event<Boolean>> = _showErrorToast
+    private val _nameText = MutableStateFlow("")
+    private val _idText = MutableStateFlow("")
+    private val _pwText = MutableStateFlow("")
+    private val _errorMsg: MutableStateFlow<String> = MutableStateFlow("")
+    private val _isError: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val _isFinish: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private var _errorMsg: MutableLiveData<String> = MutableLiveData("")
-    val errorMsg get() = _errorMsg
+    val nameText get() = _nameText
+    val idText get() = _idText
+    val pwText get() = _pwText
+    val errorMsg = _errorMsg.asStateFlow()
+    val isError = _isError.asStateFlow()
+    val isFinish = _isFinish.asStateFlow()
 
-    private var _isError: MutableLiveData<Boolean> = MutableLiveData(true)
-    val isError get() = _isError
-
-    fun checkInput(idText: String, passwordText: String, nameText: String){
-        when(val result = validateTextUseCase(idText, passwordText, nameText)){
+    fun checkInput() {
+        when (val result =
+            validateTextUseCase(idText.value, pwText.value, nameText.value)) {
             is Result.Fail -> {
                 _errorMsg.value = result.msg
-                _showErrorToast.value = Event(true)
                 _isError.value = true
             }
             is Result.Success -> {
                 viewModelScope.launch {
-                    setUser(nameText, idText, passwordText)
                     _isError.value = false
+                    setUserUseCase(nameText.value, idText.value, pwText.value)
+                    _isFinish.value = true
                 }
             }
         }
-    }
-
-    private suspend fun setUser(nameText: String,userId: String, userPassword: String) {
-        setUserUseCase(nameText, userId, userPassword)
     }
 }
