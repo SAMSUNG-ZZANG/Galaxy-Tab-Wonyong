@@ -1,4 +1,4 @@
-package com.example.sopt_seminar.ui
+package com.example.sopt_seminar.ui.profile
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,8 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.ProfileFragmentBinding
+import com.example.sopt_seminar.ui.profile.followerlist.FollowerListFragment
+import com.example.sopt_seminar.ui.profile.repo.RepoFragment
 import com.example.sopt_seminar.util.BaseFragment
 
 class ProfileFragment : BaseFragment<ProfileFragmentBinding>(R.layout.profile_fragment) {

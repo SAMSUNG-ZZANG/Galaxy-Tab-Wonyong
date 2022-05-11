@@ -1,4 +1,4 @@
-package com.example.sopt_seminar.ui
+package com.example.sopt_seminar.ui.signin
 
 import android.os.Bundle
 import android.view.View
@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.SignInFragmentBinding
-import com.example.sopt_seminar.ui.viewmodel.SignInViewModel
 import com.example.sopt_seminar.util.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

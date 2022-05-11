@@ -1,4 +1,4 @@
-package com.example.sopt_seminar.ui
+package com.example.sopt_seminar.ui.profile.repo
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.RepoFragmentBinding
 import com.example.sopt_seminar.domain.model.Repo
-import com.example.sopt_seminar.ui.adapter.RepoAdapter
+import com.example.sopt_seminar.ui.MainFragmentDirections
 import com.example.sopt_seminar.util.BaseFragment
 import java.util.*
 

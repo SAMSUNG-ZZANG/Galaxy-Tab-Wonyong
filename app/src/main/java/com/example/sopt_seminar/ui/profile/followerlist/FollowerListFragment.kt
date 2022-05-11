@@ -1,4 +1,4 @@
-package com.example.sopt_seminar.ui
+package com.example.sopt_seminar.ui.profile.followerlist
 
 import android.os.Bundle
 import android.view.View
@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.FollowerListFragmentBinding
 import com.example.sopt_seminar.domain.model.Follower
-import com.example.sopt_seminar.ui.adapter.FollowerAdapter
+import com.example.sopt_seminar.ui.MainFragmentDirections
 import com.example.sopt_seminar.util.BaseFragment
 import java.util.*
 
 class FollowerListFragment :
     BaseFragment<FollowerListFragmentBinding>(R.layout.follower_list_fragment) {
-    private val adapter = FollowerAdapter { name, description ->
+    private val adapter = FollowerListAdapter { name, description ->
         val action = MainFragmentDirections.actionMainFragmentToDetailFragment(
             followerName = name,
             followerDes = description

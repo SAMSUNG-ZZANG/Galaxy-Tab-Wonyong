@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/sign_in_fragment"
-        android:name="com.example.sopt_seminar.ui.SignInFragment"
+        android:name="com.example.sopt_seminar.ui.signin.SignInFragment"
         android:label="sign_in_activity"
         tools:layout="@layout/sign_in_fragment">
         <argument
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/sign_up_fragment"
-        android:name="com.example.sopt_seminar.ui.SignUpFragment"
+        android:name="com.example.sopt_seminar.ui.signup.SignUpFragment"
         android:label="sign_up_activity"
         tools:layout="@layout/sign_up_fragment">
         <action
@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/detail_fragment"
-        android:name="com.example.sopt_seminar.ui.DetailFragment"
+        android:name="com.example.sopt_seminar.ui.profile.DetailFragment"
         android:label="DetailFragment"
         tools:layout="@layout/detail_fragment">
         <argument

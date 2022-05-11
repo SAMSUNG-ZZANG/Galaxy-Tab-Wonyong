@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.sopt_seminar.ui.DetailFragment">
+        tools:context="com.example.sopt_seminar.ui.profile.DetailFragment">
 
         <TextView
             android:id="@+id/detail_name_tv"

@@ -1,10 +1,10 @@
-package com.example.sopt_seminar.ui
+package com.example.sopt_seminar.ui.home
 
 import android.os.Bundle
 import android.view.View
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.FragmentHomeBinding
-import com.example.sopt_seminar.ui.adapter.ViewPagerAdapter
+import com.example.sopt_seminar.ui.ViewPagerAdapter
 import com.example.sopt_seminar.util.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
 

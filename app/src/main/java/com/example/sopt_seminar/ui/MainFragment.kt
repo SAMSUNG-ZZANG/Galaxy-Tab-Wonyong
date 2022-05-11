@@ -5,7 +5,9 @@ import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.FragmentMainBinding
-import com.example.sopt_seminar.ui.adapter.ViewPagerAdapter
+import com.example.sopt_seminar.ui.camera.CameraFragment
+import com.example.sopt_seminar.ui.home.HomeFragment
+import com.example.sopt_seminar.ui.profile.ProfileFragment
 import com.example.sopt_seminar.util.BaseFragment
 
 class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {

@@ -1,4 +1,4 @@
-package com.example.sopt_seminar.ui
+package com.example.sopt_seminar.ui.signup
 
 import android.os.Bundle
 import android.view.View
@@ -9,7 +9,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.SignUpFragmentBinding
-import com.example.sopt_seminar.ui.viewmodel.SignUpViewModel
 import com.example.sopt_seminar.util.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

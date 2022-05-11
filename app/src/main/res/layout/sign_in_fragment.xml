@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.example.sopt_seminar.ui.viewmodel.SignInViewModel" />
+            type="com.example.sopt_seminar.ui.signin.SignInViewModel" />
     </data>
 
     <ScrollView
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
-            tools:context="com.example.sopt_seminar.ui.SignInFragment">
+            tools:context="com.example.sopt_seminar.ui.signin.SignInFragment">
 
             <TextView
                 android:id="@+id/sign_in_title"

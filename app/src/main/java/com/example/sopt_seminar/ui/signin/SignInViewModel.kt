@@ -1,4 +1,4 @@
-package com.example.sopt_seminar.ui.viewmodel
+package com.example.sopt_seminar.ui.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
