@@ -4,7 +4,6 @@ import com.example.sopt_seminar.data.api.request.SignInRequest
 import com.example.sopt_seminar.data.api.request.SignUpRequest
 import com.example.sopt_seminar.data.api.response.CommonResponse
 import com.example.sopt_seminar.data.api.response.DataResponse
-import com.example.sopt_seminar.data.constants.GITHUB_HEADERS
 import com.example.sopt_seminar.data.constants.GITHUB_USER_FOLLOWERS
 import com.example.sopt_seminar.data.constants.SIGN_IN
 import com.example.sopt_seminar.data.constants.SIGN_UP
@@ -12,7 +11,6 @@ import com.example.sopt_seminar.data.entity.FollowerEntity
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 
