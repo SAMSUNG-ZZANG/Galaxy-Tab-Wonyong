@@ -60,6 +60,10 @@
             android:name="followerDes"
             android:defaultValue=""
             app:argType="string" />
+        <argument
+            android:name="followerImg"
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -75,6 +79,10 @@
                 app:argType="string" />
             <argument
                 android:name="followerDes"
+                android:defaultValue=""
+                app:argType="string" />
+            <argument
+                android:name="followerImg"
                 android:defaultValue=""
                 app:argType="string" />
         </action>

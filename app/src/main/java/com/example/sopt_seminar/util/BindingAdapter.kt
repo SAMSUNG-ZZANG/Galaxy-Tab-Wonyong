@@ -11,7 +11,7 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter("setDrawable")
-    fun ImageView.showImg(drawable: Int) {
+    fun ImageView.showImg(drawable: String) {
         load(drawable) {
             transformations(CircleCropTransformation())
         }

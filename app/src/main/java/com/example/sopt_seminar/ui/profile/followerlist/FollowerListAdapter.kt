@@ -9,7 +9,7 @@ import com.example.sopt_seminar.databinding.FollowerFrameBinding
 import com.example.sopt_seminar.domain.model.Follower
 import java.util.*
 
-class FollowerListAdapter(private val action: (String, String) -> Unit) :
+class FollowerListAdapter(private val action: (String, String, String) -> Unit) :
     ListAdapter<Follower, FollowerListAdapter.FollowerViewHolder>(FOLLOWER_COMPARATOR) {
 
     inner class FollowerViewHolder(private val binding: FollowerFrameBinding) :
@@ -20,7 +20,8 @@ class FollowerListAdapter(private val action: (String, String) -> Unit) :
             binding.root.setOnClickListener {
                 action(
                     follower.name,
-                    follower.description
+                    follower.description,
+                    follower.profile
                 )
             }
         }

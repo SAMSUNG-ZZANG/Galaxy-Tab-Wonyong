@@ -17,4 +17,6 @@ interface UserRepository {
         userEmail: String,
         userPassword: String,
     ): Result
+
+    suspend fun getFollowerList(): Result
 }

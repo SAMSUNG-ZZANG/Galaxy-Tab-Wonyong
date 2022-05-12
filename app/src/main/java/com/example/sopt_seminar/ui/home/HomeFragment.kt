@@ -13,7 +13,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            img = R.drawable.kang
+            img = "https://avatars.githubusercontent.com/u/82709044?v=4"
         }
         initAdapter()
         initTabLayout()

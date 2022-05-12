@@ -11,9 +11,10 @@ class DetailFragment : BaseFragment<DetailFragmentBinding>(R.layout.detail_fragm
     private val args: DetailFragmentArgs by navArgs()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding){
+        with(binding) {
             followerName = args.followerName
             followerDes = args.followerDes
+            followerImg = args.followerImg
         }
     }
 }

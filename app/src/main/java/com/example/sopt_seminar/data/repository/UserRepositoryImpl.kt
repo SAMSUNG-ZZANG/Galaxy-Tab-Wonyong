@@ -1,10 +1,13 @@
 package com.example.sopt_seminar.data.repository
 
+import android.util.Log
 import com.example.sopt_seminar.data.api.response.ErrorResponse
 import com.example.sopt_seminar.data.entity.UserEntity
+import com.example.sopt_seminar.data.entity.toFollower
 import com.example.sopt_seminar.data.entity.toUser
 import com.example.sopt_seminar.data.source.local.UserLocalDatSource
 import com.example.sopt_seminar.data.source.remote.UserRemoteDataSource
+import com.example.sopt_seminar.domain.model.Follower
 import com.example.sopt_seminar.domain.model.User
 import com.example.sopt_seminar.domain.repository.UserRepository
 import com.example.sopt_seminar.domain.state.Result
@@ -56,6 +59,21 @@ class UserRepositoryImpl @Inject constructor(
                 gson.fromJson(response.errorBody()!!.charStream(), type)
             val msg = "실패 ${errorResponse?.message} 코드: ${errorResponse?.status}"
             Result.Fail(msg)
+        }
+    }
+
+    override suspend fun getFollowerList(): Result {
+        val response = userRemoteDataSource.getFollowerList()
+
+        return if (response.isSuccessful) {
+            val followerList: List<Follower> = response.body()?.map { followerEntity ->
+                followerEntity.toFollower()
+            }!!
+            Log.d("resrsrsfalkgm", "$followerList")
+            Result.Success(followerList)
+        } else {
+            Log.d("resrsrsfalkgm", response.errorBody()?.string().toString())
+            Result.Fail(response.errorBody())
         }
     }
 }

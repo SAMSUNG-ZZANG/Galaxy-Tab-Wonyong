@@ -19,7 +19,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>(R.layout.profile_fr
         binding.followerBtn.isSelected = true
 
         binding.apply {
-            drawable = R.drawable.kang
+            drawable = "https://avatars.githubusercontent.com/u/82709044?v=4"
         }
 
         with(binding) {

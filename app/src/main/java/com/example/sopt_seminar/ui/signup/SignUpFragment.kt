@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(R.layout.sign_up_fragment) {
-    val viewModel: SignUpViewModel by viewModels()
+    private val viewModel: SignUpViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
