@@ -12,7 +12,10 @@ import java.util.*
 class FollowerListAdapter(private val action: (String, String, String) -> Unit) :
     ListAdapter<Follower, FollowerListAdapter.FollowerViewHolder>(FOLLOWER_COMPARATOR) {
 
-    inner class FollowerViewHolder(private val binding: FollowerFrameBinding) :
+    class FollowerViewHolder(
+        private val binding: FollowerFrameBinding,
+        private val action: (String, String, String) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(follower: Follower) {
@@ -29,7 +32,7 @@ class FollowerListAdapter(private val action: (String, String, String) -> Unit) 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
         val view = FollowerFrameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FollowerViewHolder(view)
+        return FollowerViewHolder(view, action)
     }
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
