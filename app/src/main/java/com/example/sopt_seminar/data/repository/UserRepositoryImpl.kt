@@ -1,21 +1,16 @@
 package com.example.sopt_seminar.data.repository
 
-import android.util.Log
 import com.example.sopt_seminar.data.api.response.ErrorResponse
-import com.example.sopt_seminar.data.entity.UserEntity
 import com.example.sopt_seminar.data.entity.toFollower
-import com.example.sopt_seminar.data.entity.toUser
 import com.example.sopt_seminar.data.source.local.UserLocalDatSource
 import com.example.sopt_seminar.data.source.remote.UserRemoteDataSource
 import com.example.sopt_seminar.domain.model.Follower
-import com.example.sopt_seminar.domain.model.User
 import com.example.sopt_seminar.domain.repository.UserRepository
 import com.example.sopt_seminar.domain.state.Result
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class UserRepositoryImpl @Inject constructor(
     private val userLocalDatSource: UserLocalDatSource,
@@ -24,14 +19,10 @@ class UserRepositoryImpl @Inject constructor(
     private val gson = Gson()
     private val type = object : TypeToken<ErrorResponse>() {}.type
 
-    override suspend fun getUser(): Flow<User> {
-        return userLocalDatSource.getUser().map { userEntity ->
-            userEntity.toUser()
-        }
-    }
+    override suspend fun isAutoLogin(): Flow<Boolean> = userLocalDatSource.isAutoLogin()
 
-    override suspend fun setUser(user: User) {
-        userLocalDatSource.setUser(UserEntity(user.userName, user.userEmail, user.userPassword))
+    override suspend fun setAutoLogin(isAutoLogin: Boolean) {
+        userLocalDatSource.setAutoLogin(isAutoLogin)
     }
 
     override suspend fun signUp(userName: String, userEmail: String, userPassword: String): Result {
@@ -69,11 +60,9 @@ class UserRepositoryImpl @Inject constructor(
             val followerList: List<Follower> = response.body()?.map { followerEntity ->
                 followerEntity.toFollower()
             }!!
-            Log.d("resrsrsfalkgm", "$followerList")
             Result.Success(followerList)
         } else {
-            Log.d("resrsrsfalkgm", response.errorBody()?.string().toString())
-            Result.Fail(response.errorBody())
+            Result.Fail(response.errorBody()?.string())
         }
     }
 }
