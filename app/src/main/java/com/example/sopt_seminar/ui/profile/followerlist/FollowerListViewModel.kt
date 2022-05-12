@@ -7,41 +7,38 @@ import com.example.sopt_seminar.domain.state.Result
 import com.example.sopt_seminar.domain.usecase.GetFollowerListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class FollowerListViewModel @Inject constructor(
     private val getFollowerListUseCase: GetFollowerListUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(UiState())
-    val uiState = _uiState.asStateFlow()
+    private val _eventFlow = MutableSharedFlow<FollowerListEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     init {
         viewModelScope.launch {
             when (val result = getFollowerListUseCase()) {
                 is Result.Success<*> -> {
-                    _uiState.update { state ->
-                        state.copy(followerList = result.data as List<Follower>)
-                    }
+                    emitEvent(FollowerListEvent.FollowerList(result.data as List<Follower>))
                 }
                 is Result.Fail<*> -> {
-                    _uiState.update { state ->
-                        state.copy(
-                            error = true,
-                            errorMsg = result.msg.toString()
-                        )
-                    }
+                    emitEvent(FollowerListEvent.ShowToast(result.msg.toString()))
                 }
             }
         }
     }
+
+    private fun emitEvent(event: FollowerListEvent) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
 }
 
-data class UiState(
-    val error: Boolean = false,
-    val errorMsg: String = "",
-    val followerList: List<Follower> = emptyList(),
-)
+sealed class FollowerListEvent {
+    data class ShowToast(val msg: String) : FollowerListEvent()
+    data class FollowerList(val data: List<Follower>) : FollowerListEvent()
+}

@@ -2,6 +2,7 @@ package com.example.sopt_seminar.ui.profile.followerlist
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -35,10 +36,21 @@ class FollowerListFragment :
         binding.followerRecyclerView.adapter = adapter
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
-                    adapter.submitList(state.followerList)
+                viewModel.eventFlow.collect { event ->
+                    handleEvent(event)
                 }
             }
+        }
+    }
+
+    private fun handleEvent(followerListEvent: FollowerListEvent) {
+        when (followerListEvent) {
+            is FollowerListEvent.ShowToast -> Toast.makeText(
+                context,
+                followerListEvent.msg,
+                Toast.LENGTH_SHORT
+            ).show()
+            is FollowerListEvent.FollowerList -> adapter.submitList(followerListEvent.data)
         }
     }
 }

@@ -2,6 +2,7 @@ package com.example.sopt_seminar.ui.signup
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -26,16 +27,23 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(R.layout.sign_up_frag
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.isFinish.collect { isFinish ->
-                    if (isFinish) {
-                        val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
-                            userId = viewModel.idText.value,
-                            userPassword = viewModel.pwText.value
-                        )
-                        findNavController().navigate(action)
-                    }
+                viewModel.eventFlow.collect { event ->
+                    handleEvent(event)
                 }
             }
+        }
+    }
+
+    private fun handleEvent(event: SignUpViewModel.Event) = when (event) {
+        is SignUpViewModel.Event.IsFinish -> {
+            val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
+                userId = viewModel.idText.value,
+                userPassword = viewModel.pwText.value
+            )
+            findNavController().navigate(action)
+        }
+        is SignUpViewModel.Event.ShowToast -> {
+            Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
         }
     }
 }

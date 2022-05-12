@@ -81,8 +81,6 @@
 
             <Button
                 android:id="@+id/sign_in_login_btn"
-                errorMsg="@{vm.errorMsg}"
-                isError="@{vm.isError}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="44dp"
