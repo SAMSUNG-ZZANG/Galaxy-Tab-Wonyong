@@ -1,7 +1,6 @@
 package com.example.sopt_seminar.data.entity
 
 import com.example.sopt_seminar.domain.model.Follower
-import com.google.gson.annotations.SerializedName
 
 data class FollowerEntity(
     val id: Int,

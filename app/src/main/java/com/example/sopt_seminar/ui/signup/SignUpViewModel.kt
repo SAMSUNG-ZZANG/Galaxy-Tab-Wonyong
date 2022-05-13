@@ -55,9 +55,9 @@ class SignUpViewModel @Inject constructor(
             _eventFlow.emit(event)
         }
     }
+}
 
-    sealed class Event {
-        data class ShowToast(val msg: String) : Event()
-        object IsFinish : Event()
-    }
+sealed class Event {
+    data class ShowToast(val msg: String) : Event()
+    object IsFinish : Event()
 }

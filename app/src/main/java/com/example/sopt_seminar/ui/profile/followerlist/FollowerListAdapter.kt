@@ -40,20 +40,6 @@ class FollowerListAdapter(private val action: (String, String, String) -> Unit) 
         holder.bind(current)
     }
 
-    fun moveItem(fromPosition: Int, toPosition: Int, move: () -> Unit) {
-        val newList = currentList.toMutableList()
-        Collections.swap(newList, fromPosition, toPosition)
-        submitList(newList)
-        move()
-    }
-
-    fun removeItem(position: Int, remove: () -> Unit) {
-        val newList = currentList.toMutableList()
-        newList.removeAt(position)
-        submitList(newList)
-        remove()
-    }
-
     companion object {
         private val FOLLOWER_COMPARATOR = object : DiffUtil.ItemCallback<Follower>() {
             override fun areItemsTheSame(oldItem: Follower, newItem: Follower): Boolean {

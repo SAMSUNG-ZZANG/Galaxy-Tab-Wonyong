@@ -34,15 +34,15 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(R.layout.sign_up_frag
         }
     }
 
-    private fun handleEvent(event: SignUpViewModel.Event) = when (event) {
-        is SignUpViewModel.Event.IsFinish -> {
+    private fun handleEvent(event: Event) = when (event) {
+        is Event.IsFinish -> {
             val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
                 userId = viewModel.idText.value,
                 userPassword = viewModel.pwText.value
             )
             findNavController().navigate(action)
         }
-        is SignUpViewModel.Event.ShowToast -> {
+        is Event.ShowToast -> {
             Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
         }
     }

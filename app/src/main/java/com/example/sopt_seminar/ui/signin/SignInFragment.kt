@@ -40,12 +40,12 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(R.layout.sign_in_frag
         }
     }
 
-    private fun handleEvent(event: SignInViewModel.Event) = when (event) {
-        is SignInViewModel.Event.IsFinish -> {
+    private fun handleEvent(event: Event) = when (event) {
+        is Event.IsFinish -> {
             findNavController().popBackStack()
             findNavController().navigate(R.id.main_fragment)
         }
-        is SignInViewModel.Event.ShowToast -> {
+        is Event.ShowToast -> {
             Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
         }
     }
