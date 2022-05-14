@@ -196,6 +196,70 @@ override suspend fun signIn(userEmail: String, userPassword: String): Result {
 }
 ```
 
+### 궁금한 점 1
+```kotlin
+/* LOGIN API */
+const val BASE_URL = "http://13.124.62.236"
+const val SIGN_UP = "$BASE_URL/auth/signup"
+const val SIGN_IN = "$BASE_URL/auth/signin"
+
+/* GITHUB API */
+const val GITHUB_URL = "https://api.github.com"
+const val GITHUB_USER_FOLLOWERS = "$GITHUB_URL/users/{username}/followers"
+
+/* Retrofit Builder */
+@Provides
+fun provideRetrofit(): Retrofit {
+    return Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+}
+
+@Provides
+fun provideAuthApi(retrofit: Retrofit): ApiService {
+    return retrofit.create(ApiService::class.java)
+}
+
+/* ApiService */
+@POST(SIGN_IN)
+suspend fun signIn(
+    @Body signInRequest: SignInRequest
+): Response<CommonResponse<DataResponse.SignIn>>
+
+@GET(GITHUB_USER_FOLLOWERS)
+suspend fun getFollowerList(
+    @Path("username") userName: String = "KWY0218",
+): Response<List<FollowerEntity>>
+```
+
+까먹고 github `retrofit builder`를 따로 안 만들고 baseUrl이 `BASE_URL`인 `retrofit builder`로
+
+github 팔로워 리스트를 가져오는 통신을 했는데 통신이 됐습니다.
+
+이게 왜 되는지 모르겠습니다.
+
+### 궁금한 점 2
+```kotlin
+/* SignInViewmodel */
+fun setText(id: String, pw: String) {
+    _idText.value = id
+    _pwText.value = pw
+}
+
+/* SignInFragment */
+private val args: SignInFragmentArgs by navArgs()
+viewModel.setText(args.userId, args.userPassword)
+```
+
+회원가입 후 id, pw 정보를 로그인 화면에 입력하는 기능을 구현하기 위한 코드입니다.
+
+아무리 생각해도 답이 안 나와서 Fragment에서 ViewModel의 value 값을 바꾸는 함수를 Viewmodel에 만들었는데,
+
+Activity에서 ViewModel의 값을 변경했으니까 MVVM을 위배한 건지, 아니면 상관없는지 궁금합니다.
+
+
+
 [구글 문서](https://developer.android.com/kotlin/coroutines)
 
 [Will I always add withContext(Dispatchers.IO) in suspend when I pull data from a remote server?](https://stackoverflow.com/questions/60911310/will-i-always-add-withcontextdispatchers-io-in-suspend-when-i-pull-data-from-a)
