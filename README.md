@@ -254,9 +254,9 @@ viewModel.setText(args.userId, args.userPassword)
 
 회원가입 후 id, pw 정보를 로그인 화면에 입력하는 기능을 구현하기 위한 코드입니다.
 
-아무리 생각해도 답이 안 나와서 Fragment에서 ViewModel의 value 값을 바꾸는 함수를 Viewmodel에 만들었는데,
+아무리 생각해도 답이 안 나와서 Fragment에서 ViewModel의 **idText, pwText (EditText와 데이터 바인딩 중임)** value 값을 바꾸는 함수를 Viewmodel에 만들었는데,
 
-Activity에서 ViewModel의 값을 변경했으니까 MVVM을 위배한 건지, 아니면 상관없는지 궁금합니다.
+Activity에서 ViewModel의 값을 변경하는 것이 MVVM을 위배하는 건지, 아니면 상관없는지 궁금합니다.
 
 
 
@@ -265,3 +265,5 @@ Activity에서 ViewModel의 값을 변경했으니까 MVVM을 위배한 건지, 
 [Will I always add withContext(Dispatchers.IO) in suspend when I pull data from a remote server?](https://stackoverflow.com/questions/60911310/will-i-always-add-withcontextdispatchers-io-in-suspend-when-i-pull-data-from-a)
 
 [Call or Response in Retrofit?](https://stackoverflow.com/questions/64124670/call-or-response-in-retrofit)
+
+[이벤트 처리(ViewModel에서 Activity로 toast 메시지 전송)](https://medium.com/prnd/mvvm%EC%9D%98-viewmodel%EC%97%90%EC%84%9C-%EC%9D%B4%EB%B2%A4%ED%8A%B8%EB%A5%BC-%EC%B2%98%EB%A6%AC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95-6%EA%B0%80%EC%A7%80-31bb183a88ce)
