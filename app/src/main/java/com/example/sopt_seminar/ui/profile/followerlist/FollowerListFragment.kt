@@ -1,6 +1,7 @@
 package com.example.sopt_seminar.ui.profile.followerlist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -45,12 +46,19 @@ class FollowerListFragment :
 
     private fun handleEvent(followerListEvent: FollowerListEvent) {
         when (followerListEvent) {
-            is FollowerListEvent.ShowToast -> Toast.makeText(
-                context,
-                followerListEvent.msg,
-                Toast.LENGTH_SHORT
-            ).show()
-            is FollowerListEvent.FollowerList -> adapter.submitList(followerListEvent.data)
+            is FollowerListEvent.Loading -> Log.d("asdfasdfs", "Loading 화면 나중에 추가할 예정")
+            is FollowerListEvent.ShowToast -> {
+                Log.d("asdfasdfs", "ShowToast")
+                Toast.makeText(
+                    context,
+                    followerListEvent.msg,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            is FollowerListEvent.FollowerList -> {
+                adapter.submitList(followerListEvent.data)
+                Log.d("asdfasdfs", "FollowerList")
+            }
         }
     }
 }
