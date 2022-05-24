@@ -239,26 +239,6 @@ github 팔로워 리스트를 가져오는 통신을 했는데 통신이 됐습�
 
 이게 왜 되는지 모르겠습니다.
 
-### 궁금한 점 2
-```kotlin
-/* SignInViewmodel */
-fun setText(id: String, pw: String) {
-    _idText.value = id
-    _pwText.value = pw
-}
-
-/* SignInFragment */
-private val args: SignInFragmentArgs by navArgs()
-viewModel.setText(args.userId, args.userPassword)
-```
-
-회원가입 후 id, pw 정보를 로그인 화면에 입력하는 기능을 구현하기 위한 코드입니다.
-
-아무리 생각해도 답이 안 나와서 Fragment에서 ViewModel의 **idText, pwText (EditText와 데이터 바인딩 중임)** value 값을 바꾸는 함수를 Viewmodel에 만들었는데,
-
-Activity에서 ViewModel의 값을 변경하는 것이 MVVM을 위배하는 건지, 아니면 상관없는지 궁금합니다.
-
-
 
 [구글 문서](https://developer.android.com/kotlin/coroutines)
 
