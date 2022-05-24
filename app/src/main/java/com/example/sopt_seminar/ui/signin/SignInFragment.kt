@@ -2,6 +2,7 @@ package com.example.sopt_seminar.ui.signin
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -28,17 +29,24 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(R.layout.sign_in_frag
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.isFinish.collect { isFinish ->
-                    if (isFinish) {
-                        findNavController().popBackStack()
-                        findNavController().navigate(R.id.main_fragment)
-                    }
+                viewModel.eventFlow.collect { event ->
+                    handleEvent(event)
                 }
             }
         }
 
         binding.signInClearBtn.setOnClickListener {
             findNavController().navigate(R.id.sign_up_fragment)
+        }
+    }
+
+    private fun handleEvent(event: Event) = when (event) {
+        is Event.IsFinish -> {
+            findNavController().popBackStack()
+            findNavController().navigate(R.id.main_fragment)
+        }
+        is Event.ShowToast -> {
+            Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
         }
     }
 }

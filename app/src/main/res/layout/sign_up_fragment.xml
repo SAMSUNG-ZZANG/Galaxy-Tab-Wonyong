@@ -104,8 +104,6 @@
 
             <Button
                 android:id="@+id/sign_up_clear_btn"
-                errorMsg="@{vm.errorMsg}"
-                isError="@{vm.isError}"
                 android:onClick="@{()->vm.checkInput()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -12,7 +12,10 @@ import java.util.*
 class RepoAdapter(private val action: (String, String) -> Unit) :
     ListAdapter<Repo, RepoAdapter.RepoViewHolder>(REPO_COMPARATOR) {
 
-    inner class RepoViewHolder(private val binding: RepoFrameBinding) :
+    class RepoViewHolder(
+        private val binding: RepoFrameBinding,
+        private val action: (String, String) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(repo: Repo) {
@@ -28,7 +31,7 @@ class RepoAdapter(private val action: (String, String) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {
         val view = RepoFrameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RepoViewHolder(view)
+        return RepoViewHolder(view, action)
     }
 
     override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {

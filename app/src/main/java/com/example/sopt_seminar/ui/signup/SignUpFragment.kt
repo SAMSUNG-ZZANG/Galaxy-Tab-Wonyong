@@ -2,6 +2,7 @@ package com.example.sopt_seminar.ui.signup
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<SignUpFragmentBinding>(R.layout.sign_up_fragment) {
-    val viewModel: SignUpViewModel by viewModels()
+    private val viewModel: SignUpViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,16 +27,23 @@ class SignUpFragment : BaseFragment<SignUpFragmentBinding>(R.layout.sign_up_frag
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.isFinish.collect { isFinish ->
-                    if (isFinish) {
-                        val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
-                            userId = viewModel.idText.value,
-                            userPassword = viewModel.pwText.value
-                        )
-                        findNavController().navigate(action)
-                    }
+                viewModel.eventFlow.collect { event ->
+                    handleEvent(event)
                 }
             }
+        }
+    }
+
+    private fun handleEvent(event: Event) = when (event) {
+        is Event.IsFinish -> {
+            val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(
+                userId = viewModel.idText.value,
+                userPassword = viewModel.pwText.value
+            )
+            findNavController().navigate(action)
+        }
+        is Event.ShowToast -> {
+            Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
         }
     }
 }

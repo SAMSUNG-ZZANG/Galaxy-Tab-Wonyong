@@ -1,14 +1,11 @@
 package com.example.sopt_seminar.data.source.local
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.sopt_seminar.data.constants.DATASTORE
-import com.example.sopt_seminar.data.constants.GET_USER_ID
-import com.example.sopt_seminar.data.constants.GET_USER_NAME
-import com.example.sopt_seminar.data.constants.GET_USER_PASSWORD
-import com.example.sopt_seminar.data.entity.UserEntity
+import com.example.sopt_seminar.data.constants.IS_AUTO_LOGIN
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -18,25 +15,18 @@ class UserLocalDataSourceImpl @Inject constructor(
     @ApplicationContext val context: Context
 ) : UserLocalDatSource {
     private val Context.dataStore by preferencesDataStore(name = DATASTORE)
-    private val userIdKey = stringPreferencesKey(GET_USER_ID)
-    private val userPasswordKey = stringPreferencesKey(GET_USER_PASSWORD)
-    private val userNameKey = stringPreferencesKey(GET_USER_NAME)
+    private val isAutoLoginKey = booleanPreferencesKey(IS_AUTO_LOGIN)
 
-    override suspend fun getUser(): Flow<UserEntity> {
-        val userId: Flow<UserEntity> = context.dataStore.data.map { preferences ->
-            val id = preferences[userIdKey] ?: ""
-            val password = preferences[userPasswordKey] ?: ""
-            val name = preferences[userNameKey] ?: ""
-            UserEntity(name, id, password)
+    override suspend fun isAutoLogin(): Flow<Boolean> {
+        val isAutoLogin: Flow<Boolean> = context.dataStore.data.map { preferences ->
+            preferences[isAutoLoginKey] ?: false
         }
-        return userId
+        return isAutoLogin
     }
 
-    override suspend fun setUser(user: UserEntity) {
+    override suspend fun setAutoLogin(isAutoLogin: Boolean) {
         context.dataStore.edit { preferences ->
-            preferences[userIdKey] = user.email
-            preferences[userPasswordKey] = user.password
-            preferences[userNameKey] = user.name
+            preferences[isAutoLoginKey] = isAutoLogin
         }
     }
 }
