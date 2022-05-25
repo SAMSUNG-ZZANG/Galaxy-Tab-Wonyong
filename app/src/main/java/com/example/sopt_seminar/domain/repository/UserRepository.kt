@@ -1,6 +1,6 @@
 package com.example.sopt_seminar.domain.repository
 
-import com.example.sopt_seminar.domain.state.Result
+import com.example.sopt_seminar.domain.model.Follower
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -10,12 +10,12 @@ interface UserRepository {
         userName: String,
         userEmail: String,
         userPassword: String
-    ): Result
+    ): Result<String>
 
     suspend fun signIn(
         userEmail: String,
         userPassword: String,
-    ): Result
+    ): Result<String>
 
-    suspend fun getFollowerList(): Result
+    suspend fun getFollowerList(): Result<List<Follower>>
 }

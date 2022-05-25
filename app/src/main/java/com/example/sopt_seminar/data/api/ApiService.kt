@@ -18,12 +18,12 @@ interface ApiService {
     @POST(SIGN_UP)
     suspend fun signUp(
         @Body signUpRequest: SignUpRequest
-    ): Response<CommonResponse<DataResponse.SignUp>>
+    ): CommonResponse<DataResponse.SignUp>
 
     @POST(SIGN_IN)
     suspend fun signIn(
         @Body signInRequest: SignInRequest
-    ): Response<CommonResponse<DataResponse.SignIn>>
+    ): CommonResponse<DataResponse.SignIn>
 
     @GET(GITHUB_USER_FOLLOWERS)
     suspend fun getFollowerList(

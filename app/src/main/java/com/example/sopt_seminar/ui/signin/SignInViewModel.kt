@@ -2,7 +2,6 @@ package com.example.sopt_seminar.ui.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sopt_seminar.domain.state.Result
 import com.example.sopt_seminar.domain.usecase.SignInUseCase
 import com.example.sopt_seminar.domain.usecase.ValidateTextUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,19 +26,16 @@ class SignInViewModel @Inject constructor(
 
     fun checkInput() {
         viewModelScope.launch {
-            when (val result = validateTextUseCase(idText.value, pwText.value)) {
-                is Result.Fail<*> -> {
-                    emitEvent(Event.ShowToast(result.msg.toString()))
-                }
-                is Result.Success<*> -> {
-                    when (val response = signInUseCase(idText.value, pwText.value)) {
-                        is Result.Success<*> -> {
-                            emitEvent(Event.ShowToast(response.data.toString()))
-                            emitEvent(Event.IsFinish)
-                        }
-                        is Result.Fail<*> -> {
-                            emitEvent(Event.ShowToast(response.msg.toString()))
-                        }
+            validateTextUseCase(idText.value, pwText.value).collect { msg ->
+                if (msg != null) emitEvent(Event.ShowToast(msg))
+                else {
+                    runCatching {
+                        signInUseCase(idText.value, pwText.value)
+                            .onSuccess { msg ->
+                                emitEvent(Event.ShowToast(msg))
+                                emitEvent(Event.IsFinish)
+                            }
+                            .onFailure { error -> emitEvent(Event.ShowToast(error.message.toString())) }
                     }
                 }
             }
@@ -57,6 +53,7 @@ class SignInViewModel @Inject constructor(
         }
     }
 }
+
 sealed class Event {
     data class ShowToast(val msg: String) : Event()
     object IsFinish : Event()

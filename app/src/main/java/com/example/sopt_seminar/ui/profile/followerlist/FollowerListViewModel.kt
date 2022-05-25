@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sopt_seminar.domain.model.Follower
-import com.example.sopt_seminar.domain.state.Result
 import com.example.sopt_seminar.domain.usecase.GetFollowerListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -21,27 +20,16 @@ class FollowerListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            getFollowerListUseCase().collect { result ->
-                when (result) {
-                    is Result.Uninitialized -> {
-                        Log.d("asdfasdfs","viewmodel Uninitialized")
-                        emitEvent(FollowerListEvent.Loading)
-                    }
-                    is Result.Success<*> -> {
-                        Log.d("asdfasdfs","viewmodel Success")
-                        emitEvent(FollowerListEvent.FollowerList(result.data as List<Follower>))
-                    }
-                    is Result.Fail<*> -> {
-                        emitEvent(FollowerListEvent.ShowToast(result.msg.toString()))
-                    }
-                }
+            runCatching {
+                getFollowerListUseCase()
+                    .onSuccess { emitEvent(FollowerListEvent.FollowerList(it)) }
+                    .onFailure { error -> Log.d("FollowerListViewModel", error.message.toString()) }
             }
         }
     }
 
     private fun emitEvent(event: FollowerListEvent) {
         viewModelScope.launch {
-            Log.d("asdfasdfs","viewmodel emit")
             _eventFlow.emit(event)
         }
     }
