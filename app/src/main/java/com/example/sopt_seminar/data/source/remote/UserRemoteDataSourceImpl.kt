@@ -16,7 +16,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
         userName: String,
         userEmail: String,
         userPassword: String
-    ): Response<CommonResponse<DataResponse.SignUp>> {
+    ): CommonResponse<DataResponse.SignUp> {
         return apiService.signUp(
             SignUpRequest(
                 name = userName,
@@ -29,7 +29,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
     override suspend fun signInUser(
         userEmail: String,
         userPassword: String,
-    ): Response<CommonResponse<DataResponse.SignIn>> {
+    ): CommonResponse<DataResponse.SignIn> {
         return apiService.signIn(
             SignInRequest(
                 email = userEmail,

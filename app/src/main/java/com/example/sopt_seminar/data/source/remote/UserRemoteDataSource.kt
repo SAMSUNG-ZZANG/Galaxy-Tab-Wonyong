@@ -10,12 +10,12 @@ interface UserRemoteDataSource {
         userName: String,
         userEmail: String,
         userPassword: String
-    ): Response<CommonResponse<DataResponse.SignUp>>
+    ): CommonResponse<DataResponse.SignUp>
 
     suspend fun signInUser(
         userEmail: String,
         userPassword: String,
-    ): Response<CommonResponse<DataResponse.SignIn>>
+    ): CommonResponse<DataResponse.SignIn>
 
     suspend fun getFollowerList(): Response<List<FollowerEntity>>
 }
