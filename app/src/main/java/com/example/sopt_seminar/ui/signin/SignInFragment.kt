@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.SignInFragmentBinding
 import com.example.sopt_seminar.util.BaseFragment
+import com.example.sopt_seminar.util.BaseToast.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -45,8 +46,6 @@ class SignInFragment : BaseFragment<SignInFragmentBinding>(R.layout.sign_in_frag
             findNavController().popBackStack()
             findNavController().navigate(R.id.main_fragment)
         }
-        is Event.ShowToast -> {
-            Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
-        }
+        is Event.ShowToast -> { requireContext().showToast(event.msg) }
     }
 }
