@@ -44,7 +44,8 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getFollowerList(): Result<List<Follower>> {
         runCatching { userRemoteDataSource.getFollowerList() }
             .onSuccess { response ->
-                return Result.success(response.body()!!.map { followerEntity -> followerEntity.toFollower() })
+                return Result.success(
+                    response.body()!!.map { followerEntity -> followerEntity.toFollower() })
             }
             .onFailure { return Result.failure(Throwable(it)) }
         return Result.failure(Throwable("what the...f"))

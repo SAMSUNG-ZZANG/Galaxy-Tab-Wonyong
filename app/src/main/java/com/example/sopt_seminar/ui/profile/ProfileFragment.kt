@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.fragment.findNavController
 import com.example.sopt_seminar.R
 import com.example.sopt_seminar.databinding.ProfileFragmentBinding
 import com.example.sopt_seminar.ui.profile.followerlist.FollowerListFragment
@@ -25,6 +26,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>(R.layout.profile_fr
         with(binding) {
             followerBtn.setOnClickListener { followerBtnEvent() }
             repoBtn.setOnClickListener { repoBtnEvent() }
+            profileSettingImg.setOnClickListener { findNavController().navigate(R.id.action_main_fragment_to_settingFragment) }
         }
     }
 

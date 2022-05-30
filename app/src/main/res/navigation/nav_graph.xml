@@ -86,5 +86,13 @@
                 android:defaultValue=""
                 app:argType="string" />
         </action>
+        <action
+            android:id="@+id/action_main_fragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.sopt_seminar.ui.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>
