@@ -1,269 +1,106 @@
-# Seminar4 Assignment
-![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/82709044/168252716-fb84cf21-74f8-4364-b20f-0ce2c4c2b7e4.gif)
+# Seminar7 Assignment
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/82709044/173099004-5eeb2d9d-6fe2-4b1f-81ba-317c823228d3.gif)
+## NavGraph
 
-## Response wrapper class
+한 navGraph 안에 온보딩 화면까지 넣으면 번잡해보일까봐 자동로그인일 때 보여줄 `main_nav_graph.xml`, 자동로그인이 아닐 때 보여줄 `login_nav_graph.xml`로 나눴다.
 
-```kotlin
-/* sign up response data */
-{
-  "status": 0,
-  "message": "string",
-  "data": {
-    "id": 0
-  }
-}
-```
+**login_nav_graph**
 
-```kotlin
-/* sign in response data */
-{
-  "status": 0,
-  "message": "string",
-  "data": {
-    "email": "string",
-    "name": "string"
-  }
-}
-```
+![image](https://user-images.githubusercontent.com/82709044/173099569-dfbd34dd-fa0c-4181-9829-a101597176ad.png)
 
-```kotlin
-data class CommonResponse<T>(
-    val status: Int,
-    val message: String,
-    val success: String,
-    val data: T
-)
-```
+**main_nav_graph**
 
-```kotlin
-sealed class DataResponse {
-    data class SignIn(
-        val email: String,
-        val name: String,
-    ) : DataResponse()
+![image](https://user-images.githubusercontent.com/82709044/173099622-f4282bf8-5bb2-4ff3-981b-6d0ad0ec06ea.png)
 
-    data class SignUp(
-        val id: Int
-    ) : DataResponse()
-}
-```
+## 자동로그인
 
-```kotlin
-@POST(SIGN_UP)
-suspend fun signUp(
-  @Body signUpRequest: SignUpRequest
-): Response<CommonResponse<DataResponse.SignUp>>
-
-@POST(SIGN_IN)
-suspend fun signIn(
-  @Body signInRequest: SignInRequest
-): Response<CommonResponse<DataResponse.SignIn>>
-```
-
-SignUp, SignIn 반환 값을 보면 data를 제외한 나머지 반환 값들이 같은 것을 볼 수 있다.
-
-그래서 `CommonResponse` 내에 있는 data를 제네릭으로 만들고, `sealed class`를 만들어서 **SignIn 전용 data class**, **SignUp 전용 data class**를 만들어서 `CommonResponse` 내에 넣어줬다.
-
-## Error Response
-
-```kotlin
-/* error response */
-"data": {
-  "status": 409,
-  "success": false,
-  "message": "Duplicate",
-},
-```
-
-```kotlin
-data class ErrorResponse(
-    val status: Int,
-    val success: Boolean,
-    val message: String,
-)
-```
-
-```kotlin
-private val gson = Gson()
-private val type = object : TypeToken<ErrorResponse>() {}.type
-val errorResponse: ErrorResponse? = gson.fromJson(response.errorBody()!!.charStream(), type)
-```
-
-통신 작업을 실패했을 때 토스트 메시지를 호출하기 위해서 `errorBody().toString()` 를 메시지로 넣었지만 이상한 문자들만 나왔다.
-
-그래서 검색해보니 `errorBody()`를 변환해줘야 한다해서 `ErrorResponse`를 만들어서 `errobody()` 내용을 `string`으로 변환해서 에러 내용을 토스트 메시지로 호출했다
-
-## Github 연동
-
-```json
-[
-  {
-    "login": "octocat",
-    "id": 1,
-    "node_id": "MDQ6VXNlcjE=",
-    "avatar_url": "https://github.com/images/error/octocat_happy.gif",
-    "gravatar_id": "",
-    "url": "https://api.github.com/users/octocat",
-    "html_url": "https://github.com/octocat",
-    "followers_url": "https://api.github.com/users/octocat/followers",
-    "following_url": "https://api.github.com/users/octocat/following{/other_user}",
-    "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
-    "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
-    "organizations_url": "https://api.github.com/users/octocat/orgs",
-    "repos_url": "https://api.github.com/users/octocat/repos",
-    "events_url": "https://api.github.com/users/octocat/events{/privacy}",
-    "received_events_url": "https://api.github.com/users/octocat/received_events",
-    "type": "User",
-    "site_admin": false
-  }
-]
-```
-
-```kotlin
-data class FollowerEntity(
-    val id: Int,
-    @SerializedName("avatar_url") val avatarUrl: String,
-    val login: String,
-    @SerializedName("node_id") val nodeId: String,
-    @SerializedName("gravatar_id") val gravatarId: String,
-    @SerializedName("followers_url") val followersUrl: String,
-    @SerializedName("following_url") val followingUrl: String,
-    @SerializedName("gists_url") val gistsUrl: String,
-    @SerializedName("starred_url") val starredUrl: String,
-    @SerializedName("organizations_url") val organizationsUrl: String,
-    @SerializedName("repos_url") val reposUrl: String,
-    @SerializedName("events_url") val eventsUrl: String,
-    @SerializedName("received_events_url") val receivedEventsUrl: String,
-)
-
-fun FollowerEntity.toFollower() = Follower(
-    id = id,
-    profile = avatar_url,
-    name = login,
-)
-```
-
-```kotlin
-override suspend fun getFollowerList(): Result {
-        val response = userRemoteDataSource.getFollowerList()
-
-        return if (response.isSuccessful) {
-            val followerList: List<Follower> = response.body()?.map { followerEntity ->
-                followerEntity.toFollower()
-            }!!
-            Result.Success(followerList)
-        } else {
-            Result.Fail(response.errorBody()?.string())
-        }
+1. 로그인 화면에서 자동로그인 체크박스를 체크하고 로그인을 하면 dataStore에 true 값을 저장한다.
+2. 메인 화면에서 설정 버튼을 누른 후, 자동로그인 해제 아이콘을 누르면 나오는 Dialog에서 해제 버튼을 누르면 dataStore에 false 값을 저장한다
+3. Splash Screen이 나올 때 MainActivity에서 dataStore의 값을 확인하고 true면 main화면으로, false이면 로그인 화면으로 이동한다
+    
+    ```kotlin
+    lifecycleScope.launch {
+    	  isAutoLoginUseCase().collect { isAutoLogin ->
+    	      if (isAutoLogin) findNavController(R.id.nav_host_fragment).setGraph(R.navigation.main_nav_graph)
+    	      else findNavController(R.id.nav_host_fragment).setGraph(R.navigation.login_nav_graph)
+    	  }
     }
-```
-변수 네이밍이 카멜케이스가 아닌 변수만 @SerializedName를 사용했다.
-객체들 값이 무엇을 표현하는지 몰라서 entity로 일단 다받아서 로그로 확인한 후, Recyclerview에 보여줄 값들만 매핑시켜주는 확장함수를 만들어서 `FollowerEntity` 에서 `Follower`로 변환했다.
+    ```
+    
 
-## Coroutine
+## Splash Screen
 
-`fun` 을 통해 서버 통신을 한다면 **UI스레드**에서 통신을 하기 때문에 통신이 끝날 때까지 **UI스레드**는 대기하거나 차단된다. **UI스레드**가 차단되는 경우 애플리케이션이 응답 없음(ANR) 대화상자가 표시될 수 있다.
+Android 12부터 Splash Screen API를 지원해준다길래 한번 사용해봤다
 
-위 문제를 해결하기 위해서 `withContext` 와 `suspend`를 통해서 통신 작업을 **UI스레드**에서 **I/O스레드**에서 작업하게 만들면 해결된다.
-
-하지만 `Retrofit2` 라이브러리는 내부에 `Dispathcher.IO` 를 가지고 있어서 `withContext(Dispatcher.IO)` 를 안해줘도 **I/O스레드**에서 실행할 수 있다.
-
-또, `Coroutine`을 사용하면 `enqueue callback` 이 필요없어지기 때문에 비동기 방식으로 통신을 할 때 `Call` 대신 `Response`를 사용하는 것이 좋다.
-
-`enqueue callback` : 실제 서버통신을 비동기적으로 요청하는 동작을 한다.
+1. dependency를 추가한다
 
 ```kotlin
-/* example */
-@POST(SIGN_IN)
-suspend fun signIn(
-    @Body signInRequest: SignInRequest
-): Response<CommonResponse<DataResponse.SignIn>>
-
-/* example */
-override suspend fun signIn(userEmail: String, userPassword: String): Result {
-    val response = userRemoteDataSource.signInUser(userEmail, userPassword)
-
-    return if (response.isSuccessful) {
-        val msg = "성공 ${response.body()?.message} 코드: ${response.body()?.status}"
-        Result.Success(msg)
-    } else {
-        val errorResponse: ErrorResponse? =
-            gson.fromJson(response.errorBody()!!.charStream(), type)
-        val msg = "실패 ${errorResponse?.message} 코드: ${errorResponse?.status}"
-        Result.Fail(msg)
-    }
-}
+// Splash Screen
+implementation 'androidx.core:core-splashscreen:1.0.0-rc01'
 ```
 
-### 궁금한 점 1
+1. `themes.xml` 파일에 아래와 같이 설정한다
+
+```xml
+<style name="Theme.App.Starting" parent="Theme.SplashScreen">
+    <item name="windowSplashScreenBackground">@color/white</item>
+    <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+    <!-- Required for animated icons -->
+    <item name="windowSplashScreenAnimationDuration">1000</item>
+    <item name="postSplashScreenTheme">@style/Theme.SoptSeminar</item>
+</style>
+```
+
+1. manifest에 설정한 theme를 선언한다
+
+```xml
+<application
+	...
+	android:theme="@style/Theme.App.Starting"
+```
+
+1. mainActivity에 splash screen을 호출한다
+
 ```kotlin
-/* LOGIN API */
-const val BASE_URL = "http://13.124.62.236"
-const val SIGN_UP = "$BASE_URL/auth/signup"
-const val SIGN_IN = "$BASE_URL/auth/signin"
-
-/* GITHUB API */
-const val GITHUB_URL = "https://api.github.com"
-const val GITHUB_USER_FOLLOWERS = "$GITHUB_URL/users/{username}/followers"
-
-/* Retrofit Builder */
-@Provides
-fun provideRetrofit(): Retrofit {
-    return Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+override fun onCreate(savedInstanceState: Bundle?) {
+	super.onCreate(savedInstanceState)
+	installSplashScreen()
+	setContentView(binding.root)
 }
-
-@Provides
-fun provideAuthApi(retrofit: Retrofit): ApiService {
-    return retrofit.create(ApiService::class.java)
-}
-
-/* ApiService */
-@POST(SIGN_IN)
-suspend fun signIn(
-    @Body signInRequest: SignInRequest
-): Response<CommonResponse<DataResponse.SignIn>>
-
-@GET(GITHUB_USER_FOLLOWERS)
-suspend fun getFollowerList(
-    @Path("username") userName: String = "KWY0218",
-): Response<List<FollowerEntity>>
 ```
 
-까먹고 github `retrofit builder`를 따로 안 만들고 baseUrl이 `BASE_URL`인 `retrofit builder`로
+이 때 installSplashScreen()을 setContentView 선언 전에 호출해야 한다
 
-github 팔로워 리스트를 가져오는 통신을 했는데 통신이 됐습니다.
+안그러면  `java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity` 에러가 생긴다
 
-이게 왜 되는지 모르겠습니다.
+구글문서에 나온대로 그대로 한번 해봤는데, Splash Activity를 따로 안 만들어서 괜찮은 것 같다.
 
-### 궁금한 점 2
+### 궁금한 점
 ```kotlin
-/* SignInViewmodel */
-fun setText(id: String, pw: String) {
-    _idText.value = id
-    _pwText.value = pw
+lifecycleScope.launch {
+	  isAutoLoginUseCase().collect { isAutoLogin ->
+	      if (isAutoLogin) findNavController(R.id.nav_host_fragment).setGraph(R.navigation.main_nav_graph)
+	      else findNavController(R.id.nav_host_fragment).setGraph(R.navigation.login_nav_graph)
+	  }
 }
-
-/* SignInFragment */
-private val args: SignInFragmentArgs by navArgs()
-viewModel.setText(args.userId, args.userPassword)
 ```
+위 로직은 Splash Screen이 나올 때 MainActivity에서 자동로그인 체크를 위한 로직입니다.
 
-회원가입 후 id, pw 정보를 로그인 화면에 입력하는 기능을 구현하기 위한 코드입니다.
+영상을 보면 diolog에서 자동로그인 해제를 누르자마자 바로 로그인 화면으로 돌아가는 것을 볼 수 있습니다.
 
-아무리 생각해도 답이 안 나와서 Fragment에서 ViewModel의 **idText, pwText (EditText와 데이터 바인딩 중임)** value 값을 바꾸는 함수를 Viewmodel에 만들었는데,
+원했던 화면 흐름이긴 했지만, dataStore에서 false가 되자마자 바로 위 로직을 통해서 graph를 바꿨다는 것인데
 
-Activity에서 ViewModel의 값을 변경하는 것이 MVVM을 위배하는 건지, 아니면 상관없는지 궁금합니다.
+**이런 상황도 메모리 누수인지 궁금합니다**
 
+왜냐면 의도한 것은 Splash Screen에서 자동로그인 체크를 단 한번하는 것인데,
 
+위와 같은 상황은 계속 flow로 데이터를 수집하고 있다는 것이기 때문입니다
 
-[구글 문서](https://developer.android.com/kotlin/coroutines)
+메모리누수인가요???
 
-[Will I always add withContext(Dispatchers.IO) in suspend when I pull data from a remote server?](https://stackoverflow.com/questions/60911310/will-i-always-add-withcontextdispatchers-io-in-suspend-when-i-pull-data-from-a)
+--------
+온보딩 화면은 fragment 3개 만들기 싫어서, fragment 1개로 어떻게 할 수 있을까 고민하다가 시험기간 때 안 봤던 유투브 정주행했더니 시간이 이렇게 됐네요.. 추후에 올리겠습니다..!
 
-[Call or Response in Retrofit?](https://stackoverflow.com/questions/64124670/call-or-response-in-retrofit)
+[스플래쉬 스크린](https://developer.android.com/guide/topics/ui/splash-screen)
 
-[이벤트 처리(ViewModel에서 Activity로 toast 메시지 전송)](https://medium.com/prnd/mvvm%EC%9D%98-viewmodel%EC%97%90%EC%84%9C-%EC%9D%B4%EB%B2%A4%ED%8A%B8%EB%A5%BC-%EC%B2%98%EB%A6%AC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95-6%EA%B0%80%EC%A7%80-31bb183a88ce)
+[스플래쉬 마이그레이션](https://developer.android.com/guide/topics/ui/splash-screen/migrate)
