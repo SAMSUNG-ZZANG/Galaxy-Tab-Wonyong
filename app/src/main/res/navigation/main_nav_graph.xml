@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/detail_fragment"
+        android:name="com.example.sopt_seminar.ui.profile.DetailFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/detail_fragment">
+        <argument
+            android:name="followerName"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="followerDes"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="followerImg"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.example.sopt_seminar.ui.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_detailFragment"
+            app:destination="@id/detail_fragment">
+            <argument
+                android:name="followerName"
+                android:defaultValue=""
+                app:argType="string" />
+            <argument
+                android:name="followerDes"
+                android:defaultValue=""
+                app:argType="string" />
+            <argument
+                android:name="followerImg"
+                android:defaultValue=""
+                app:argType="string" />
+        </action>
+        <action
+            android:id="@+id/action_main_fragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.sopt_seminar.ui.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+</navigation>

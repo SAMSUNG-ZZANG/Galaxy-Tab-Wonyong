@@ -2,6 +2,7 @@ package com.example.sopt_seminar.ui.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sopt_seminar.domain.usecase.SetAutoLoginUseCase
 import com.example.sopt_seminar.domain.usecase.SignInUseCase
 import com.example.sopt_seminar.domain.usecase.ValidateTextUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,12 +15,14 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val validateTextUseCase: ValidateTextUseCase,
-    private val signInUseCase: SignInUseCase
+    private val signInUseCase: SignInUseCase,
+    private val setAutoLoginUseCase: SetAutoLoginUseCase
 ) : ViewModel() {
     private val _idText = MutableStateFlow("")
     private val _pwText = MutableStateFlow("")
     private val _eventFlow = MutableSharedFlow<Event>()
 
+    val isAuto = MutableStateFlow(false)
     val eventFlow = _eventFlow.asSharedFlow()
     val idText get() = _idText
     val pwText get() = _pwText
@@ -32,6 +35,7 @@ class SignInViewModel @Inject constructor(
                     runCatching {
                         signInUseCase(idText.value, pwText.value)
                             .onSuccess { msg ->
+                                if (isAuto.value) setAutoLoginUseCase(true)
                                 emitEvent(Event.ShowToast(msg))
                                 emitEvent(Event.IsFinish)
                             }

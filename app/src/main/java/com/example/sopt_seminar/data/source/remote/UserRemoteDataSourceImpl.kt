@@ -6,18 +6,21 @@ import com.example.sopt_seminar.data.api.request.SignUpRequest
 import com.example.sopt_seminar.data.api.response.CommonResponse
 import com.example.sopt_seminar.data.api.response.DataResponse
 import com.example.sopt_seminar.data.entity.FollowerEntity
+import com.example.sopt_seminar.di.BaseApi
+import com.example.sopt_seminar.di.GithubApi
 import javax.inject.Inject
 import retrofit2.Response
 
 class UserRemoteDataSourceImpl @Inject constructor(
-    private val apiService: ApiService
+    @BaseApi private val baseApiService: ApiService,
+    @GithubApi private val githubApiService: ApiService
 ) : UserRemoteDataSource {
     override suspend fun signUpUser(
         userName: String,
         userEmail: String,
         userPassword: String
     ): CommonResponse<DataResponse.SignUp> {
-        return apiService.signUp(
+        return baseApiService.signUp(
             SignUpRequest(
                 name = userName,
                 email = userEmail,
@@ -30,7 +33,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
         userEmail: String,
         userPassword: String,
     ): CommonResponse<DataResponse.SignIn> {
-        return apiService.signIn(
+        return baseApiService.signIn(
             SignInRequest(
                 email = userEmail,
                 password = userPassword
@@ -39,6 +42,6 @@ class UserRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getFollowerList(): Response<List<FollowerEntity>> {
-        return apiService.getFollowerList()
+        return githubApiService.getFollowerList()
     }
 }
