@@ -29,7 +29,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                     lifecycleScope.launch {
                         requireContext().showToast(resources.getString(R.string.setting_auto_login))
                         setAutoLoginUseCase(false)
-                        findNavController().navigateUp()
                     }
                 }
                 .show()
