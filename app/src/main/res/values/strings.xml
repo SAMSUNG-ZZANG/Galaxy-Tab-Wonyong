@@ -37,7 +37,9 @@
     <string name="camera_tv">사진을 첨부해주세요</string>
     <string name="camera_btn">첨부하기</string>
 
-    <string name="setting_auto_login">자동로그인 해제</string>
+    <string name="setting_auto_login">자동 로그인 해제</string>
+    <string name="setting_dialog_positive">해제</string>
+    <string name="setting_dialog_text">자동 로그인을 해제하시겠습니까?</string>
     <string name="setting_auto_tb">환경설정</string>
 
     <string-array name="tab_layout_items">
