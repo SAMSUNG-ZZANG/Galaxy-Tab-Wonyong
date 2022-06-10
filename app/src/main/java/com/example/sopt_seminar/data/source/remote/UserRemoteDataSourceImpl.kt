@@ -6,12 +6,14 @@ import com.example.sopt_seminar.data.api.request.SignUpRequest
 import com.example.sopt_seminar.data.api.response.CommonResponse
 import com.example.sopt_seminar.data.api.response.DataResponse
 import com.example.sopt_seminar.data.entity.FollowerEntity
+import com.example.sopt_seminar.di.BaseApi
+import com.example.sopt_seminar.di.GithubApi
 import javax.inject.Inject
 import retrofit2.Response
 
 class UserRemoteDataSourceImpl @Inject constructor(
-    private val baseApiService: ApiService,
-    private val githubApiService: ApiService
+    @BaseApi private val baseApiService: ApiService,
+    @GithubApi private val githubApiService: ApiService
 ) : UserRemoteDataSource {
     override suspend fun signUpUser(
         userName: String,

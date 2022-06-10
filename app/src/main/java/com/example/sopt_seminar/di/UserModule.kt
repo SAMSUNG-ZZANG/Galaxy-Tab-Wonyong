@@ -1,7 +1,5 @@
 package com.example.sopt_seminar.di
 
-import android.content.Context
-import com.example.sopt_seminar.data.api.ApiService
 import com.example.sopt_seminar.data.repository.UserRepositoryImpl
 import com.example.sopt_seminar.data.source.local.UserLocalDatSource
 import com.example.sopt_seminar.data.source.local.UserLocalDataSourceImpl
@@ -11,7 +9,6 @@ import com.example.sopt_seminar.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -20,25 +17,20 @@ import javax.inject.Singleton
 object UserModule {
     @Provides
     @Singleton
-    fun provideUserLocalDataSource(@ApplicationContext context: Context): UserLocalDatSource {
-        return UserLocalDataSourceImpl(context)
-    }
+    fun provideUserLocalDataSource(
+        impl: UserLocalDataSourceImpl
+    ): UserLocalDatSource = impl
 
     @Provides
     @Singleton
     fun provideUserRemoteDataSource(
-        @BaseApi baseApiService: ApiService,
-        @GithubApi githubApiService: ApiService
-    ): UserRemoteDataSource {
-        return UserRemoteDataSourceImpl(baseApiService, githubApiService)
-    }
+        impl: UserRemoteDataSourceImpl
+    ): UserRemoteDataSource = impl
 
     @Provides
     @Singleton
     fun provideUserRepository(
-        userLocalDatSource: UserLocalDatSource,
-        userRemoteDataSource: UserRemoteDataSource
-    ): UserRepository {
-        return UserRepositoryImpl(userLocalDatSource, userRemoteDataSource)
-    }
+        impl: UserRepositoryImpl
+    ): UserRepository = impl
+
 }
